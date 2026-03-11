@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="بوابة تثقيف الأسرة - جراحة عظام الأطفال">
+    <meta name="theme-color" content="#0891b2">
+    <title>بوابة تثقيف الأسرة - جراحة عظام الأطفال</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-icon">
+                <svg viewBox="0 0 120 120" width="100" height="100">
+                    <circle cx="60" cy="60" r="55" fill="#0891b2" opacity="0.1"/>
+                    <circle cx="60" cy="60" r="40" fill="#0891b2" opacity="0.2"/>
+                    <path d="M60 25 L60 95 M25 60 L95 60" stroke="#0891b2" stroke-width="8" stroke-linecap="round"/>
+                    <circle cx="60" cy="60" r="55" fill="none" stroke="#0891b2" stroke-width="3"/>
+                </svg>
+            </div>
+            <h1>بوابة تثقيف الأسرة</h1>
+            <p>وحدة جراحة عظام الأطفال</p>
+            <p style="font-size:0.85em;opacity:0.85;margin-top:4px;">مستشفى الملك فيصل التخصصي ومركز الأبحاث</p>
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="app hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <button class="menu-btn" id="menuBtn" aria-label="القائمة">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="header-title" id="headerTitle">
+                    <svg viewBox="0 0 24 24" width="28" height="28" class="header-icon">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+                    </svg>
+                    <span>بوابة تثقيف الأسرة</span>
+                </div>
+                <button class="search-btn" id="searchBtn" aria-label="بحث">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- Search Bar -->
+            <div class="search-bar hidden" id="searchBar">
+                <input type="search" id="searchInput" placeholder="ابحث عن حالة أو موضوع..." autocomplete="off">
+                <button class="search-close" id="searchClose" aria-label="إغلاق البحث">✕</button>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+        </header>
+
+        <!-- Side Navigation -->
+        <nav class="side-nav" id="sideNav">
+            <div class="nav-header">
+                <div class="nav-logo">
+                    <svg viewBox="0 0 120 120" width="50" height="50">
+                        <circle cx="60" cy="60" r="55" fill="#0891b2" opacity="0.15"/>
+                        <path d="M60 30 L60 90 M30 60 L90 60" stroke="#0891b2" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
+                    <div>
+                        <h2>بوابة تثقيف الأسرة</h2>
+                        <small>وحدة جراحة عظام الأطفال- مستشفى الملك فيصل التخصصي ومركز الأبحاث</small>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#" class="nav-link active" data-page="home">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/></svg>
+                    <span>الرئيسية</span>
+                </a>
+                <div class="nav-category">الحالات العصبية والعضلية</div>
+                <a href="#" class="nav-link" data-page="cerebral-palsy">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>الشلل الدماغي</span>
+                </a>
+                <a href="#" class="nav-link" data-page="spina-bifida">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>الصلب المشقوق</span>
+                </a>
+                <a href="#" class="nav-link" data-page="cmt">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>شاركو ماري توث</span>
+                </a>
+                <a href="#" class="nav-link" data-page="neuromuscular">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>أمراض عصبية عضلية</span>
+                </a>
+                <div class="nav-category">أمراض العظام والمفاصل</div>
+                <a href="#" class="nav-link" data-page="oi">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>تكون العظم الناقص</span>
+                </a>
+                <a href="#" class="nav-link" data-page="clubfoot">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>القدم الحنفاء</span>
+                </a>
+                <a href="#" class="nav-link" data-page="flatfoot">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>القدم المسطحة</span>
+                </a>
+                <a href="#" class="nav-link" data-page="ddh">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>خلع الورك التطوري</span>
+                </a>
+                <a href="#" class="nav-link" data-page="perthes">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>مرض بيرثيز</span>
+                </a>
+                <a href="#" class="nav-link" data-page="scfe">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>انزلاق رأس الفخذ</span>
+                </a>
+                <a href="#" class="nav-link" data-page="toe-walking">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>المشي على أطراف الأصابع</span>
+                </a>
+                <a href="#" class="nav-link" data-page="arthrogryposis">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>تيبس المفاصل الخلقي</span>
+                </a>
+                <div class="nav-category">الكسور</div>
+                <a href="#" class="nav-link" data-page="supracondylar">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>كسور فوق اللقمة</span>
+                </a>
+                <a href="#" class="nav-link" data-page="forearm-fractures">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>كسور الساعد</span>
+                </a>
+                <a href="#" class="nav-link" data-page="femur-fractures">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>كسور عظم الفخذ</span>
+                </a>
+                <a href="#" class="nav-link" data-page="tibia-fractures">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+                    <span>كسور الساق</span>
+                </a>
+                <div class="nav-category">دليل الجراحة</div>
+                <a href="#" class="nav-link" data-page="surgery-guide">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="currentColor"/></svg>
+                    <span>دليل ما قبل وبعد الجراحة</span>
+                </a>
+                <a href="#" class="nav-link" data-page="qr-codes">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4zM13 13h2v2h-2zM15 15h2v2h-2zM13 17h2v2h-2zM17 13h2v2h-2zM19 15h2v2h-2zM17 17h2v2h-2zM19 19h2v2h-2zM15 19h2v2h-2z" fill="currentColor"/></svg>
+                    <span>رموز QR للطباعة</span>
+                </a>
+            </div>
+            <div class="nav-footer">
+                <p>هذا المحتوى للأغراض التعليمية فقط</p>
+                <p>استشر طبيبك دائماً</p>
+            </div>
+        </nav>
+        <div class="nav-overlay" id="navOverlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Dynamic content loaded here -->
+        </main>
+
+        <!-- Bottom Navigation (Mobile) -->
+        <nav class="bottom-nav">
+            <a href="#" class="bottom-nav-item active" data-page="home">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/></svg>
+                <span>الرئيسية</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="categories">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z" fill="currentColor"/></svg>
+                <span>الأقسام</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="surgery-guide">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="currentColor"/></svg>
+                <span>دليل الجراحة</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="qr-codes">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4z" fill="currentColor"/></svg>
+                <span>QR</span>
+            </a>
+        </nav>
+
+        <!-- Back to Top Button -->
+        <button class="back-to-top hidden" id="backToTop" aria-label="العودة للأعلى">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/></svg>
+        </button>
+    </div>
+
+    <!-- Print Stylesheet -->
+    <style media="print">
+        .header, .bottom-nav, .side-nav, .nav-overlay, .back-to-top, .search-bar { display: none !important; }
+        .main-content { margin: 0 !important; padding: 10px !important; }
+        .condition-card { break-inside: avoid; }
+    </style>
+
+    <script src="js/illustrations.js"></script>
+    <script src="js/data/conditions-neuro.js"></script>
+    <script src="js/data/conditions-skeletal.js"></script>
+    <script src="js/data/conditions-hip.js"></script>
+    <script src="js/data/conditions-fractures.js"></script>
+    <script src="js/data/surgery-guide.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

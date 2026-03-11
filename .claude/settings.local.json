@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"eval\\(require\\(''fs''\\).readFileSync\\(''js/data/conditions-neuro.js'',''utf8''\\)\\); console.log\\(''neuro OK, conditions:'', conditionsNeuro.length, conditionsNeuro.map\\(c=>c.id\\)\\)\")",
+      "Bash(node -e \"const window={}; eval\\(require\\(''fs''\\).readFileSync\\(''js/data/conditions-neuro.js'',''utf8''\\)\\); console.log\\(''neuro OK:'', window.conditionsNeuro.length, window.conditionsNeuro.map\\(c=>c.id\\)\\)\")",
+      "Bash(node -e \"const window={}; eval\\(require\\(''fs''\\).readFileSync\\(''js/data/conditions-skeletal.js'',''utf8''\\)\\); console.log\\(''skeletal OK:'', window.conditionsSkeletal.length, window.conditionsSkeletal.map\\(c=>c.id\\)\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(open \"/Users/mousa/Desktop/Parents Education/index.html\")",
+      "WebSearch",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Hip_dysplasia&prop=images&format=json&imlimit=20\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Clubfoot&prop=images&format=json&imlimit=20\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Spina_bifida&prop=images&format=json&imlimit=20\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=File:Hip_dysplasia_-_schematic.jpg|File:Pied_bot,_varus_%C3%A9quin_\\(bilateral\\).jpg|File:Typesofspinabifida.jpg|File:Spina-bifida.jpg|File:Clubfoot.jpg|File:Varus_Illustration.png|File:Meningomyelocele_diagram.jpg&prop=imageinfo&iiprop=url&format=json\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Legg%E2%80%93Calv%C3%A9%E2%80%93Perthes_disease&prop=images&format=json&imlimit=20\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Slipped_capital_femoral_epiphysis|Supracondylar_humerus_fracture|Cerebral_palsy|Osteogenesis_imperfecta|Arthrogryposis|Pes_planus&prop=images&format=json&imlimit=50\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=File:Hip_dysplasia_-_schematic.jpg|File:Varus_Illustration.png|File:Typesofspinabifida.jpg|File:Roe-perthes.jpg|File:SCFE_FROG_B%26W.jpg|File:Anterior_humeral_line.jpg|File:Amsterdam_Gait_Classification_gb.jpg|File:Osteogenesis_imperfecta_X-ray_\\(clinically_type_IV\\)_of_right_femur.png|File:Arthrogryposis_multiplex_congenita_\\(by_Adolph_Wilhelm_Otto_1841\\).png|File:Two_postoperative_radiographs_of_a_patient_who_underwent_rodding_surgery_for_osteogenesis_imperfecta.png|File:Tip_of_a_Fassier%E2%80%93Duval_intramedullary_rod_manufactured_by_Pega_Medical.png|File:LCPdisease2015.png|File:Epilys.jpg|File:Sheldon-Hall_syndrome.JPG&prop=imageinfo&iiprop=url&format=json\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Pes_planus&prop=images&format=json&imlimit=20\")",
+      "Bash(python3 -c \":*)",
+      "Bash(curl -s \"https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch=forearm+fracture+child+xray&srnamespace=6&format=json&srlimit=10\")",
+      "Bash(curl -s \"https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch=femur+fracture+xray+fixation&srnamespace=6&format=json&srlimit=10\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=File:Flatfoot.jpg|File:Flat_feet_\\(left\\).jpg|File:Subtle_tibia_fracture_-_X-ray.jpg|File:CT_of_tibial_fracture.jpg|File:A_practical_treatise_on_fractures_and_dislocations_\\(1907\\)_\\(14764501711\\).jpg|File:Cerebral_palsy.jpg|File:Cerebralparese_Orthese_orthotics.jpg&prop=imageinfo&iiprop=url&format=json\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=File:Supracondylarfrac.png|File:SupracondylarfracMark.png|File:Fracture_both_bones_of_the_left_arm.jpg|File:Healing_supracondylar_fracture.jpg&prop=imageinfo&iiprop=url&format=json\")",
+      "Bash(gh auth:*)",
+      "Bash(git --version)",
+      "Bash(brew list:*)",
+      "Bash(brew install:*)",
+      "Bash(GH=/tmp/gh_install/gh_2.63.2_macOS_arm64/bin/gh)",
+      "Bash(chmod +x \"$GH\")",
+      "Bash($GH auth:*)"
+    ]
+  }
+}
