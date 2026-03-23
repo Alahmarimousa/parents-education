@@ -7,7 +7,7 @@
     'use strict';
 
     // Secret access token - change this to update the QR code access
-    const ACCESS_TOKEN = 'KFSHRC-PedOrtho-2026';
+    const ACCESS_TOKEN = 'PedOrtho-Portal-2026';
 
     // Check if URL hash contains the correct access token
     function getAccessToken() {
@@ -54,7 +54,7 @@
                     </svg>
                     <span>يرجى مسح رمز QR للدخول</span>
                 </div>
-                <p class="gate-footer">مستشفى الملك فيصل التخصصي ومركز الأبحاث<br>وحدة جراحة عظام الأطفال</p>
+                <p class="gate-footer">وحدة جراحة عظام الأطفال</p>
             </div>
         `;
         document.body.appendChild(gate);
