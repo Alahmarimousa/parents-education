@@ -82,6 +82,13 @@
         state.currentPage = page;
         renderPage(page);
         updateActiveNav(page);
+        // Update hash with page param while preserving access token
+        const params = new URLSearchParams(window.location.hash.substring(1));
+        params.set('page', page);
+        const newHash = '#' + params.toString();
+        if (window.location.hash !== newHash) {
+            history.replaceState(null, '', newHash);
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
         closeSearch();
     }
@@ -583,10 +590,11 @@
 
     function generateQRCodes() {
         // Use QR Server API for real, scannable QR codes
+        const ACCESS_TOKEN = 'PedOrtho-Portal-2026';
         $$('.qr-canvas').forEach(canvas => {
             const page = canvas.dataset.page;
             const baseUrl = window.location.href.split('#')[0].split('?')[0];
-            const url = `${baseUrl}#${page}`;
+            const url = `${baseUrl}#access=${ACCESS_TOKEN}&page=${page}`;
 
             // Replace canvas with img using QR Server API
             const img = document.createElement('img');
@@ -651,17 +659,24 @@
     }
 
     // ---- Hash routing ----
+    // Hash format: #access=TOKEN&page=somepage
+    function getPageFromHash() {
+        const hash = window.location.hash;
+        if (!hash) return null;
+        const params = new URLSearchParams(hash.substring(1));
+        return params.get('page') || null;
+    }
+
     window.addEventListener('hashchange', () => {
-        const page = window.location.hash.replace('#', '') || 'home';
-        if (page !== state.currentPage) {
+        const page = getPageFromHash();
+        if (page && page !== state.currentPage) {
             navigateTo(page);
         }
     });
 
-    // Check initial hash
-    if (window.location.hash) {
-        const page = window.location.hash.replace('#', '');
-        setTimeout(() => navigateTo(page), 2000);
+    // Check initial page from hash (set by access-gate.js)
+    if (window.__INITIAL_PAGE__) {
+        setTimeout(() => navigateTo(window.__INITIAL_PAGE__), 2000);
     }
 
     // Expose navigateTo globally for inline usage

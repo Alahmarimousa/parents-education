@@ -9,17 +9,16 @@
     // Secret access token - change this to update the QR code access
     const ACCESS_TOKEN = 'PedOrtho-Portal-2026';
 
-    // Check if URL hash contains the correct access token
-    function getAccessToken() {
+    // Parse hash parameters (format: #access=TOKEN&page=somepage)
+    function getHashParams() {
         const hash = window.location.hash;
-        if (!hash) return null;
-        const params = new URLSearchParams(hash.substring(1));
-        return params.get('access');
+        if (!hash) return {};
+        return Object.fromEntries(new URLSearchParams(hash.substring(1)));
     }
 
     function isAuthorized() {
-        const token = getAccessToken();
-        if (token === ACCESS_TOKEN) {
+        const params = getHashParams();
+        if (params.access === ACCESS_TOKEN) {
             // Store in sessionStorage so navigation within the page works
             sessionStorage.setItem('pe_authorized', 'true');
             return true;
@@ -27,6 +26,9 @@
         // Check sessionStorage for already-authorized sessions
         return sessionStorage.getItem('pe_authorized') === 'true';
     }
+
+    // Expose helper to get the initial page from hash (e.g., #access=TOKEN&page=cerebral-palsy)
+    window.__INITIAL_PAGE__ = getHashParams().page || null;
 
     function showAccessDenied() {
         // Hide everything
