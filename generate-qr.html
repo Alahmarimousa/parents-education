@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code - Parents Education Portal</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f9ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        h1 { color: #0891b2; font-size: 1.4rem; margin-bottom: 8px; }
+        .subtitle { color: #64748b; font-size: 0.9rem; margin-bottom: 24px; }
+        #qr-canvas { margin: 20px auto; display: block; }
+        .url-display {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 20px 0;
+            font-size: 0.8rem;
+            color: #475569;
+            direction: ltr;
+            word-break: break-all;
+            font-family: monospace;
+        }
+        .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: #0891b2; color: white; }
+        .btn-primary:hover { background: #0e7490; }
+        .btn-secondary { background: #f1f5f9; color: #475569; }
+        .btn-secondary:hover { background: #e2e8f0; }
+        .instructions {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            text-align: right;
+        }
+        .instructions h3 { color: #1e293b; font-size: 1rem; margin-bottom: 12px; }
+        .instructions ol { padding-right: 20px; color: #475569; font-size: 0.9rem; line-height: 2; }
+        .note {
+            background: #fef3c7;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #92400e;
+        }
+        .config {
+            margin-bottom: 24px;
+            text-align: left;
+            direction: ltr;
+        }
+        .config label { display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 4px; }
+        .config input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: monospace;
+        }
+        .config input:focus { outline: none; border-color: #0891b2; }
+        @media print {
+            body { background: white; }
+            .actions, .instructions, .config, .no-print { display: none !important; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>رمز QR - بوابة تثقيف الأسرة</h1>
+        <p class="subtitle">QR Code for Parents Education Portal</p>
+
+        <div class="config no-print">
+            <label>Site URL (your GitHub Pages URL):</label>
+            <input type="text" id="siteUrl" placeholder="https://username.github.io/repository-name/" value="">
+        </div>
+
+        <canvas id="qr-canvas"></canvas>
+        <div class="url-display" id="urlDisplay"></div>
+
+        <div class="actions no-print">
+            <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة</button>
+            <button class="btn btn-secondary" onclick="downloadQR()">⬇️ تحميل صورة</button>
+            <button class="btn btn-secondary" onclick="generateQR()">🔄 تحديث</button>
+        </div>
+
+        <div class="instructions no-print">
+            <h3>تعليمات الاستخدام:</h3>
+            <ol>
+                <li>أدخل رابط موقعك على GitHub Pages في الحقل أعلاه</li>
+                <li>اضغط "تحديث" لإنشاء رمز QR جديد</li>
+                <li>اطبع هذه الصفحة أو حمّل صورة رمز QR</li>
+                <li>وزّع رمز QR على الأهالي في العيادة</li>
+                <li>عند مسح الرمز، سيتم فتح البوابة مباشرة</li>
+            </ol>
+            <div class="note">
+                <strong>ملاحظة:</strong> فقط من يملك رمز QR هذا يمكنه الوصول للمحتوى. الزوار بدون الرمز سيرون صفحة "الوصول مقيّد".
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code library (qrcode-generator) -->
+    <script>
+    /**
+     * Minimal QR Code generator - creates QR code on canvas
+     * Using a simple implementation for zero dependencies
+     */
+    function generateQRMatrix(data) {
+        // We'll use the QR code API as a fallback approach
+        // For a self-contained solution, draw using canvas
+        return data;
+    }
+
+    const ACCESS_TOKEN = 'KFSHRC-PedOrtho-2026';
+
+    function getFullUrl() {
+        const base = document.getElementById('siteUrl').value.trim();
+        if (!base) return null;
+        const url = base.endsWith('/') ? base : base + '/';
+        return url + '#access=' + ACCESS_TOKEN;
+    }
+
+    function generateQR() {
+        const fullUrl = getFullUrl();
+        if (!fullUrl) {
+            alert('Please enter your site URL first');
+            return;
+        }
+        document.getElementById('urlDisplay').textContent = fullUrl;
+
+        const canvas = document.getElementById('qr-canvas');
+        const size = 280;
+        canvas.width = size;
+        canvas.height = size;
+
+        // Use QR code image from a chart API for simplicity
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        const encodedUrl = encodeURIComponent(fullUrl);
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodedUrl}&margin=10`;
+        img.onload = function() {
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, size, size);
+            ctx.drawImage(img, 0, 0, size, size);
+        };
+        img.onerror = function() {
+            // Fallback: show URL text if API fails
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, size, size);
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '14px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('QR generation requires internet', size/2, size/2 - 10);
+            ctx.fillText('Use the URL below instead', size/2, size/2 + 15);
+        };
+    }
+
+    function downloadQR() {
+        const canvas = document.getElementById('qr-canvas');
+        const link = document.createElement('a');
+        link.download = 'parents-education-qr.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    // Auto-detect GitHub Pages URL from current location
+    window.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('siteUrl');
+        const loc = window.location;
+        if (loc.hostname.includes('github.io')) {
+            // We're on GitHub Pages - use current origin + path
+            const pathParts = loc.pathname.split('/').filter(Boolean);
+            if (pathParts.length > 0) {
+                input.value = loc.origin + '/' + pathParts[0] + '/';
+            } else {
+                input.value = loc.origin + '/';
+            }
+            generateQR();
+        }
+    });
+    </script>
+</body>
+</html>

@@ -3,6 +3,94 @@
    Arabic RTL - Mobile First - Medical Theme
    ============================================ */
 
+/* ---- Access Gate ---- */
+#access-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: linear-gradient(135deg, #ecfeff 0%, #f0f9ff 50%, #eff6ff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    direction: rtl;
+}
+
+.gate-container {
+    text-align: center;
+    padding: 40px 30px;
+    max-width: 420px;
+    width: 90%;
+}
+
+.gate-icon {
+    margin-bottom: 24px;
+    animation: gatePulse 2s ease-in-out infinite;
+}
+
+@keyframes gatePulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.gate-title {
+    font-size: 1.8rem;
+    color: #1e293b;
+    margin: 0 0 4px;
+    font-weight: 700;
+}
+
+.gate-subtitle {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin: 0 0 20px;
+    font-weight: 500;
+    direction: ltr;
+}
+
+.gate-message {
+    font-size: 1rem;
+    color: #475569;
+    margin: 0 0 6px;
+    line-height: 1.6;
+}
+
+.gate-message-en {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 0 24px;
+    direction: ltr;
+}
+
+.gate-divider {
+    width: 60px;
+    height: 3px;
+    background: #0891b2;
+    border-radius: 2px;
+    margin: 0 auto 24px;
+}
+
+.gate-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 0.95rem;
+    color: #0891b2;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.gate-footer {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin: 0;
+}
+
 /* ---- CSS Variables ---- */
 :root {
     --primary: #0891b2;
