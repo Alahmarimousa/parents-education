@@ -589,40 +589,395 @@
     }
 
     function generateQRCodes() {
-        // Use QR Server API for real, scannable QR codes
         const ACCESS_TOKEN = 'PedOrtho-Portal-2026';
-        $$('.qr-canvas').forEach(canvas => {
-            const page = canvas.dataset.page;
-            const baseUrl = window.location.href.split('#')[0].split('?')[0];
-            const url = `${baseUrl}#access=${ACCESS_TOKEN}&page=${page}`;
+        const BASE_URL = 'https://alahmarimousa.github.io/parents-education/';
 
-            // Replace canvas with img using QR Server API
-            const img = document.createElement('img');
-            img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}&color=1e293b&bgcolor=ffffff&margin=10`;
-            img.alt = `QR code for ${page}`;
-            img.className = 'qr-image';
-            img.width = 200;
-            img.height = 200;
-            img.style.borderRadius = '12px';
-            img.style.border = '2px solid #e2e8f0';
+        $$('.qr-canvas').forEach(canvasEl => {
+            const page = canvasEl.dataset.page;
+            const url = `${BASE_URL}#access=${ACCESS_TOKEN}&page=${page}`;
 
-            // Store the URL for print
-            img.dataset.url = url;
-            img.dataset.page = page;
+            // Generate QR code on canvas using built-in generator
+            const size = 200;
+            canvasEl.width = size;
+            canvasEl.height = size;
+            canvasEl.style.borderRadius = '12px';
+            canvasEl.style.border = '2px solid #e2e8f0';
+            canvasEl.dataset.url = url;
+            canvasEl.dataset.page = page;
+            canvasEl.className = 'qr-image';
 
-            canvas.replaceWith(img);
+            drawQR(canvasEl, url, size);
         });
 
         // Print individual QR
         $$('.qr-print').forEach(btn => {
             btn.addEventListener('click', () => {
                 const card = btn.closest('.qr-card');
-                const img = card.querySelector('.qr-image');
+                const qrEl = card.querySelector('.qr-image');
                 const title = card.querySelector('h3').textContent;
-                const url = img.dataset.url;
-                printQR(img.src, title, url);
+                const url = qrEl.dataset.url;
+                const imgSrc = qrEl.toDataURL('image/png');
+                printQR(imgSrc, title, url);
             });
         });
+    }
+
+    // ---- Minimal QR Code Generator (supports alphanumeric URLs) ----
+    function drawQR(canvas, text, size) {
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, size, size);
+
+        // Use QRCode matrix generation
+        const qr = generateQRMatrix(text);
+        if (!qr) {
+            ctx.fillStyle = '#ef4444';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('QR Error', size / 2, size / 2);
+            return;
+        }
+
+        const modules = qr.length;
+        const cellSize = (size - 20) / modules;
+        const offset = 10;
+
+        ctx.fillStyle = '#1e293b';
+        for (let r = 0; r < modules; r++) {
+            for (let c = 0; c < modules; c++) {
+                if (qr[r][c]) {
+                    ctx.fillRect(
+                        offset + c * cellSize,
+                        offset + r * cellSize,
+                        cellSize + 0.5,
+                        cellSize + 0.5
+                    );
+                }
+            }
+        }
+    }
+
+    // QR Code matrix generator (Version 1-6, Error Correction L)
+    function generateQRMatrix(data) {
+        // Encode data as byte mode
+        const dataBytes = [];
+        for (let i = 0; i < data.length; i++) {
+            const code = data.charCodeAt(i);
+            if (code < 128) dataBytes.push(code);
+            else if (code < 2048) {
+                dataBytes.push(192 | (code >> 6));
+                dataBytes.push(128 | (code & 63));
+            } else {
+                dataBytes.push(224 | (code >> 12));
+                dataBytes.push(128 | ((code >> 6) & 63));
+                dataBytes.push(128 | (code & 63));
+            }
+        }
+
+        // Version capacities for byte mode, EC level L
+        const versionCapacity = [0, 17, 32, 53, 78, 106, 134, 154, 192, 230, 271, 321, 367, 425, 458, 520, 586];
+        let version = 0;
+        for (let v = 1; v <= 16; v++) {
+            if (dataBytes.length <= versionCapacity[v]) { version = v; break; }
+        }
+        if (version === 0) return null;
+
+        const size = 17 + version * 4;
+        const matrix = Array.from({length: size}, () => Array(size).fill(null));
+        const reserved = Array.from({length: size}, () => Array(size).fill(false));
+
+        // Place finder patterns
+        function placeFinder(row, col) {
+            for (let r = -1; r <= 7; r++) {
+                for (let c = -1; c <= 7; c++) {
+                    const mr = row + r, mc = col + c;
+                    if (mr < 0 || mr >= size || mc < 0 || mc >= size) continue;
+                    if (r === -1 || r === 7 || c === -1 || c === 7) {
+                        matrix[mr][mc] = false;
+                    } else if ((r === 0 || r === 6) || (c === 0 || c === 6)) {
+                        matrix[mr][mc] = true;
+                    } else if (r >= 2 && r <= 4 && c >= 2 && c <= 4) {
+                        matrix[mr][mc] = true;
+                    } else {
+                        matrix[mr][mc] = false;
+                    }
+                    reserved[mr][mc] = true;
+                }
+            }
+        }
+
+        placeFinder(0, 0);
+        placeFinder(0, size - 7);
+        placeFinder(size - 7, 0);
+
+        // Timing patterns
+        for (let i = 8; i < size - 8; i++) {
+            matrix[6][i] = (i % 2 === 0);
+            reserved[6][i] = true;
+            matrix[i][6] = (i % 2 === 0);
+            reserved[i][6] = true;
+        }
+
+        // Alignment patterns for version >= 2
+        if (version >= 2) {
+            const alignPos = getAlignmentPositions(version);
+            for (const r of alignPos) {
+                for (const c of alignPos) {
+                    if (reserved[r] && reserved[r][c]) continue;
+                    for (let dr = -2; dr <= 2; dr++) {
+                        for (let dc = -2; dc <= 2; dc++) {
+                            const mr = r + dr, mc = c + dc;
+                            if (mr < 0 || mr >= size || mc < 0 || mc >= size) continue;
+                            if (Math.abs(dr) === 2 || Math.abs(dc) === 2 || (dr === 0 && dc === 0)) {
+                                matrix[mr][mc] = true;
+                            } else {
+                                matrix[mr][mc] = false;
+                            }
+                            reserved[mr][mc] = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Reserve format info areas
+        for (let i = 0; i < 8; i++) {
+            reserved[8][i] = true;
+            reserved[8][size - 1 - i] = true;
+            reserved[i][8] = true;
+            reserved[size - 1 - i][8] = true;
+        }
+        reserved[8][8] = true;
+        // Dark module
+        matrix[size - 8][8] = true;
+        reserved[size - 8][8] = true;
+
+        // Reserve version info for version >= 7
+        if (version >= 7) {
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 3; j++) {
+                    reserved[i][size - 11 + j] = true;
+                    reserved[size - 11 + j][i] = true;
+                }
+            }
+        }
+
+        // Encode data
+        const ecInfo = getECInfo(version);
+        const totalCodewords = ecInfo.totalCodewords;
+        const ecCodewordsPerBlock = ecInfo.ecPerBlock;
+        const blocks = ecInfo.blocks;
+
+        // Build data bit stream
+        const bits = [];
+        // Mode indicator: byte = 0100
+        bits.push(0, 1, 0, 0);
+        // Character count
+        const ccBits = version <= 9 ? 8 : 16;
+        for (let i = ccBits - 1; i >= 0; i--) bits.push((dataBytes.length >> i) & 1);
+        // Data
+        for (const b of dataBytes) {
+            for (let i = 7; i >= 0; i--) bits.push((b >> i) & 1);
+        }
+        // Terminator
+        const totalDataBits = (totalCodewords - ecCodewordsPerBlock * blocks.reduce((s, b) => s + b.count, 0)) * 8;
+        for (let i = 0; i < 4 && bits.length < totalDataBits; i++) bits.push(0);
+        // Pad to byte boundary
+        while (bits.length % 8 !== 0) bits.push(0);
+        // Pad codewords
+        let padByte = 0;
+        while (bits.length < totalDataBits) {
+            const p = padByte % 2 === 0 ? 0xEC : 0x11;
+            for (let i = 7; i >= 0; i--) bits.push((p >> i) & 1);
+            padByte++;
+        }
+
+        // Convert to bytes
+        const dataCodewords = [];
+        for (let i = 0; i < bits.length; i += 8) {
+            let byte = 0;
+            for (let j = 0; j < 8; j++) byte = (byte << 1) | (bits[i + j] || 0);
+            dataCodewords.push(byte);
+        }
+
+        // Generate EC codewords using Reed-Solomon
+        const allBlocks = [];
+        let offset = 0;
+        for (const block of blocks) {
+            for (let b = 0; b < block.count; b++) {
+                const blockData = dataCodewords.slice(offset, offset + block.dataCodewords);
+                offset += block.dataCodewords;
+                const ec = reedSolomonEncode(blockData, ecCodewordsPerBlock);
+                allBlocks.push({ data: blockData, ec: ec });
+            }
+        }
+
+        // Interleave
+        const finalData = [];
+        const maxDataLen = Math.max(...allBlocks.map(b => b.data.length));
+        for (let i = 0; i < maxDataLen; i++) {
+            for (const block of allBlocks) {
+                if (i < block.data.length) finalData.push(block.data[i]);
+            }
+        }
+        for (let i = 0; i < ecCodewordsPerBlock; i++) {
+            for (const block of allBlocks) {
+                if (i < block.ec.length) finalData.push(block.ec[i]);
+            }
+        }
+
+        // Convert to bits
+        const finalBits = [];
+        for (const b of finalData) {
+            for (let i = 7; i >= 0; i--) finalBits.push((b >> i) & 1);
+        }
+        // Remainder bits
+        const remainderBits = [0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (let i = 0; i < (remainderBits[version] || 0); i++) finalBits.push(0);
+
+        // Place data bits
+        let bitIdx = 0;
+        let upward = true;
+        for (let col = size - 1; col >= 0; col -= 2) {
+            if (col === 6) col = 5; // skip timing column
+            const rows = upward ? Array.from({length: size}, (_, i) => size - 1 - i) : Array.from({length: size}, (_, i) => i);
+            for (const row of rows) {
+                for (let c = 0; c < 2; c++) {
+                    const cc = col - c;
+                    if (cc < 0) continue;
+                    if (reserved[row][cc]) continue;
+                    matrix[row][cc] = bitIdx < finalBits.length ? finalBits[bitIdx] === 1 : false;
+                    bitIdx++;
+                }
+            }
+            upward = !upward;
+        }
+
+        // Apply mask (mask 0: (row + col) % 2 === 0)
+        for (let r = 0; r < size; r++) {
+            for (let c = 0; c < size; c++) {
+                if (!reserved[r][c]) {
+                    if ((r + c) % 2 === 0) matrix[r][c] = !matrix[r][c];
+                }
+            }
+        }
+
+        // Write format info (mask 0, EC level L)
+        const formatBits = getFormatBits(0, 1); // mask 0, ecl L=1
+        for (let i = 0; i < 15; i++) {
+            const bit = ((formatBits >> (14 - i)) & 1) === 1;
+            // Around top-left finder
+            if (i < 6) matrix[8][i] = bit;
+            else if (i < 8) matrix[8][i + 1] = bit;
+            else if (i < 9) matrix[8 - (i - 8)][8] = bit;
+            else matrix[14 - i][8] = bit;
+            // Around other finders
+            if (i < 8) matrix[size - 1 - i][8] = bit;
+            else matrix[8][size - 15 + i] = bit;
+        }
+
+        // Write version info for version >= 7
+        if (version >= 7) {
+            const versionBits = getVersionBits(version);
+            for (let i = 0; i < 18; i++) {
+                const bit = ((versionBits >> i) & 1) === 1;
+                const r = Math.floor(i / 3);
+                const c = i % 3;
+                matrix[r][size - 11 + c] = bit;
+                matrix[size - 11 + c][r] = bit;
+            }
+        }
+
+        return matrix.map(row => row.map(v => v === true));
+    }
+
+    function getAlignmentPositions(version) {
+        if (version === 1) return [];
+        const positions = [
+            [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34],
+            [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50], [6, 30, 54],
+            [6, 32, 58], [6, 34, 62], [6, 26, 46, 66], [6, 26, 48, 70], [6, 26, 50, 74]
+        ];
+        return positions[version - 1] || [];
+    }
+
+    function getECInfo(version) {
+        // EC Level L data: [totalCodewords, ecPerBlock, [{count, dataCodewords}]]
+        const table = {
+            1: { totalCodewords: 26, ecPerBlock: 7, blocks: [{ count: 1, dataCodewords: 19 }] },
+            2: { totalCodewords: 44, ecPerBlock: 10, blocks: [{ count: 1, dataCodewords: 34 }] },
+            3: { totalCodewords: 70, ecPerBlock: 15, blocks: [{ count: 1, dataCodewords: 55 }] },
+            4: { totalCodewords: 100, ecPerBlock: 20, blocks: [{ count: 1, dataCodewords: 80 }] },
+            5: { totalCodewords: 134, ecPerBlock: 26, blocks: [{ count: 1, dataCodewords: 108 }] },
+            6: { totalCodewords: 172, ecPerBlock: 18, blocks: [{ count: 2, dataCodewords: 68 }] },
+            7: { totalCodewords: 196, ecPerBlock: 20, blocks: [{ count: 2, dataCodewords: 78 }] },
+            8: { totalCodewords: 242, ecPerBlock: 24, blocks: [{ count: 2, dataCodewords: 97 }] },
+            9: { totalCodewords: 292, ecPerBlock: 30, blocks: [{ count: 2, dataCodewords: 116 }] },
+            10: { totalCodewords: 346, ecPerBlock: 18, blocks: [{ count: 2, dataCodewords: 68 }, { count: 2, dataCodewords: 69 }] },
+        };
+        return table[version];
+    }
+
+    // Reed-Solomon encoder over GF(256)
+    function reedSolomonEncode(data, ecCount) {
+        // GF(256) log/exp tables
+        const exp = new Uint8Array(512);
+        const log = new Uint8Array(256);
+        let x = 1;
+        for (let i = 0; i < 255; i++) {
+            exp[i] = x;
+            log[x] = i;
+            x = (x << 1) ^ (x >= 128 ? 0x11d : 0);
+        }
+        for (let i = 255; i < 512; i++) exp[i] = exp[i - 255];
+
+        // Generator polynomial
+        const gen = new Uint8Array(ecCount + 1);
+        gen[0] = 1;
+        for (let i = 0; i < ecCount; i++) {
+            for (let j = ecCount; j >= 1; j--) {
+                gen[j] = gen[j] ^ (gen[j - 1] === 0 ? 0 : exp[log[gen[j - 1]] + i]);
+            }
+        }
+
+        // Division
+        const result = new Uint8Array(ecCount);
+        const msg = new Uint8Array(data.length + ecCount);
+        for (let i = 0; i < data.length; i++) msg[i] = data[i];
+
+        for (let i = 0; i < data.length; i++) {
+            const coef = msg[i];
+            if (coef !== 0) {
+                for (let j = 0; j <= ecCount; j++) {
+                    msg[i + j] ^= (gen[j] === 0 ? 0 : exp[log[gen[j]] + log[coef]]);
+                }
+            }
+        }
+
+        for (let i = 0; i < ecCount; i++) result[i] = msg[data.length + i];
+        return Array.from(result);
+    }
+
+    function getFormatBits(mask, ecl) {
+        // ecl: L=1, M=0, Q=3, H=2
+        const data = (ecl << 3) | mask;
+        let bits = data << 10;
+        // BCH(15,5) division by x10+x8+x5+x4+x2+x+1 (0x537)
+        for (let i = 4; i >= 0; i--) {
+            if (bits & (1 << (i + 10))) bits ^= (0x537 << i);
+        }
+        bits = (data << 10) | bits;
+        // XOR mask
+        return bits ^ 0x5412;
+    }
+
+    function getVersionBits(version) {
+        let bits = version << 12;
+        // BCH(18,6) division by x12+x11+x10+x9+x8+x5+x2+1 (0x1F25)
+        for (let i = 5; i >= 0; i--) {
+            if (bits & (1 << (i + 12))) bits ^= (0x1F25 << i);
+        }
+        return (version << 12) | bits;
     }
 
     function printQR(imgSrc, title, url) {
