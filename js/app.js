@@ -188,6 +188,8 @@
             shortDesc: 'تعليمات شاملة للتحضير للعمليات الجراحية والعناية بعدها',
             keywords: ['جراحة', 'عملية', 'تحضير', 'تخدير', 'ما بعد', 'ما قبل']
         });
+        // Add cast care sections
+        if (window.castCareData) conditions.push(...window.castCareData);
         return conditions;
     }
 
@@ -318,6 +320,16 @@
                         <h3>دليل ما قبل وبعد الجراحة</h3>
                         <p>تعليمات شاملة</p>
                     </div>
+                    <div class="category-card" data-page="cast-care">
+                        <div class="category-icon cat-surgery">🦴</div>
+                        <h3>العناية بالجبيرة</h3>
+                        <p>بعد الجراحة</p>
+                    </div>
+                    <div class="category-card" data-page="spica-cast-care">
+                        <div class="category-icon cat-hip">👶</div>
+                        <h3>الجبيرة الحوضية</h3>
+                        <p>دليل العناية الشامل</p>
+                    </div>
                     <div class="category-card" data-page="qr-codes">
                         <div class="category-icon cat-surgery">📱</div>
                         <h3>رموز QR للطباعة</h3>
@@ -379,12 +391,28 @@
                 `).join('')}
 
                 <div class="category-group">
-                    <div class="group-title">📋 أدلة مهمة</div>
+                    <div class="group-title">📋 أدلة الجراحة والعناية</div>
                     <div class="condition-list-card" data-page="surgery-guide">
                         <div class="card-icon cat-surgery">🏥</div>
                         <div class="card-info">
                             <h3>دليل ما قبل وبعد الجراحة</h3>
                             <p>تعليمات شاملة للتحضير للعمليات والعناية بعدها</p>
+                        </div>
+                        <div class="card-arrow">◀</div>
+                    </div>
+                    <div class="condition-list-card" data-page="cast-care">
+                        <div class="card-icon cat-surgery">🦴</div>
+                        <div class="card-info">
+                            <h3>العناية بالجبيرة بعد الجراحة</h3>
+                            <p>تعليمات العناية بالجبيرة وعلامات الخطر والحياة اليومية</p>
+                        </div>
+                        <div class="card-arrow">◀</div>
+                    </div>
+                    <div class="condition-list-card" data-page="spica-cast-care">
+                        <div class="card-icon cat-hip">👶</div>
+                        <div class="card-info">
+                            <h3>العناية بالجبيرة الحوضية (البنطلونية)</h3>
+                            <p>دليل شامل للعناية بالطفل في الجبيرة الحوضية بعد عملية خلع الورك</p>
                         </div>
                         <div class="card-arrow">◀</div>
                     </div>
