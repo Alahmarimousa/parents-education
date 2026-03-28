@@ -95,13 +95,13 @@ window.MedicalIllustrations = {
         </div>
     `,
 
-    // ---- Femur Fixation ----
+    // ---- Femur Fracture - Illustration ----
     femurFixation: `
         <div class="illustration-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Osteogenesis_imperfecta_X-ray_%28clinically_type_IV%29_of_right_femur.png"
-                 alt="صورة أشعة لتثبيت كسر عظم الفخذ"
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Thigh_bone_fracture_-_Fracture_of_femur_6_--_Smart-Servier.png"
+                 alt="رسم توضيحي لكسر عظم الفخذ"
                  loading="lazy" />
-            <div class="illustration-caption">صورة أشعة لعظم الفخذ - تثبيت جراحي - المصدر: Wikimedia Commons</div>
+            <div class="illustration-caption">رسم توضيحي لكسر عظم الفخذ عند الأطفال - المصدر: Smart-Servier / Wikimedia Commons (CC BY-SA 3.0)</div>
         </div>
     `,
 
@@ -162,6 +162,26 @@ window.MedicalIllustrations = {
                  alt="علامة غاورز - الطفل يتسلق على ساقيه للوقوف بسبب ضعف العضلات"
                  loading="lazy" />
             <div class="illustration-caption">علامة غاورز (Gowers' Sign) - الطفل يستخدم يديه للوقوف بسبب ضعف العضلات القريبة - المصدر: Wikimedia Commons (Public Domain, 1879)</div>
+        </div>
+    `,
+
+    // ---- Equinus / Toe Walking - Illustration ----
+    equinus: `
+        <div class="illustration-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Equinus_Illustration.png"
+                 alt="رسم توضيحي لتشوه القدم القفداء (Equinus) - وضعية المشي على أطراف الأصابع"
+                 loading="lazy" />
+            <div class="illustration-caption">تشوه القدم القفداء (Equinus Deformity) - وضعية المشي على أطراف الأصابع - المصدر: Wikimedia Commons (CC BY-SA 4.0)</div>
+        </div>
+    `,
+
+    // ---- Toe Walking - Clinical Photo ----
+    toeWalkingPhoto: `
+        <div class="illustration-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Toe_Walking_in_Autism_1.jpg"
+                 alt="صورة سريرية للمشي على أطراف الأصابع"
+                 loading="lazy" />
+            <div class="illustration-caption">صورة توضيحية للمشي على أطراف الأصابع (Toe Walking) - المصدر: Wikimedia Commons (CC BY-SA 4.0)</div>
         </div>
     `,
 
