@@ -159,6 +159,8 @@ window.conditionsFractures = [
             </tbody>
           </table>
 
+          ${window.MedicalIllustrations?.supracondylarKwire || ''}
+
           <div class="surgery-card">
             <h4>الرد المفتوح + التثبيت (Open Reduction + Pinning)</h4>
             <p>يُلجأ إليه عندما يفشل الرد المغلق أو عند وجود إصابة وعائية تحتاج استكشافاً. يتم فتح جراحي لرؤية الكسر مباشرة، إزالة الأنسجة العالقة بين أجزاء الكسر، رد العظم تحت الرؤية المباشرة، ثم التثبيت بالأسياخ. نسبة صغيرة من الحالات تحتاج هذا النهج.</p>

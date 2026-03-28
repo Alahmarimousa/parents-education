@@ -668,6 +668,9 @@ window.conditionsNeuro = [
           <div class="section-intro">
             <p>مرض شاركو-ماري-توث (CMT) هو مجموعة من الأمراض الوراثية التي تصيب الأعصاب الطرفية. يُعد أكثر الأمراض العصبية الوراثية شيوعاً، ويؤثر على حوالي 1 من كل 2500 شخص. يسبب ضعفاً وضموراً تدريجياً في عضلات القدمين والساقين واليدين، مع تشوه تدريجي في شكل القدم.</p>
           </div>
+
+          ${window.MedicalIllustrations?.cmtFoot || ''}
+
           <h3>الأنواع الرئيسية</h3>
           <table class="data-table">
             <thead>
@@ -925,6 +928,9 @@ window.conditionsNeuro = [
           <div class="section-intro">
             <p>الأمراض العصبية العضلية مجموعة من الأمراض الوراثية التي تسبب ضعفاً تدريجياً في العضلات. أهمها من الناحية العظمية: الحثل العضلي الدوشيني (الأكثر شيوعاً وشدة)، والحثل العضلي البيكري، وضمور العضلات الشوكي (SMA). تؤثر هذه الأمراض بشكل كبير على الجهاز العضلي الهيكلي وتحتاج لرعاية متعددة التخصصات.</p>
           </div>
+
+          ${window.MedicalIllustrations?.muscularDystrophyGowers || ''}
+          ${window.MedicalIllustrations?.muscularDystrophyBody || ''}
 
           <h3>الأنواع الرئيسية</h3>
           <table class="data-table">

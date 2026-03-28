@@ -5,13 +5,13 @@
 
 window.MedicalIllustrations = {
 
-    // ---- Hip Joint Normal vs DDH ----
+    // ---- Hip Joint DDH - X-ray ----
     hipDDH: `
         <div class="illustration-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Hip_dysplasia_-_schematic.jpg"
-                 alt="رسم توضيحي لخلع الورك التطوري - مقارنة بين الورك الطبيعي والمصاب"
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Dysplasie_de_hanche_-_avant_op%C3%A9ration.jpg"
+                 alt="صورة أشعة لخلع الورك التطوري قبل الجراحة"
                  loading="lazy" />
-            <div class="illustration-caption">رسم توضيحي لخلع الورك التطوري (DDH) - المصدر: Wikimedia Commons</div>
+            <div class="illustration-caption">صورة أشعة لخلع الورك التطوري (DDH) قبل الجراحة - المصدر: Wikimedia Commons (CC0)</div>
         </div>
     `,
 
@@ -35,13 +35,23 @@ window.MedicalIllustrations = {
         </div>
     `,
 
-    // ---- Supracondylar Fracture ----
+    // ---- Supracondylar Fracture (pre-op) ----
     supracondylar: `
         <div class="illustration-container">
             <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/SupracondylarfracMark.png"
                  alt="صورة أشعة لكسر فوق اللقمة في المرفق"
                  loading="lazy" />
             <div class="illustration-caption">صورة أشعة لكسر فوق اللقمة في عظم العضد - المصدر: Wikimedia Commons</div>
+        </div>
+    `,
+
+    // ---- Supracondylar Fracture K-wire Fixation (post-op) ----
+    supracondylarKwire: `
+        <div class="illustration-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Healing_supracondylar_fracture.jpg"
+                 alt="صورة أشعة لكسر فوق اللقمة بعد التثبيت بأسياخ كيرشنر"
+                 loading="lazy" />
+            <div class="illustration-caption">صورة أشعة لكسر فوق اللقمة بعد التثبيت الجراحي بأسياخ كيرشنر (K-wires) - المصدر: Wikimedia Commons (CC BY-SA 3.0)</div>
         </div>
     `,
 
@@ -125,13 +135,43 @@ window.MedicalIllustrations = {
         </div>
     `,
 
-    // ---- Tibia Fracture ----
+    // ---- Tibia Fracture (pediatric) ----
     tibiaFracture: `
         <div class="illustration-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Subtle_tibia_fracture_-_X-ray.jpg"
-                 alt="صورة أشعة لكسر عظم الساق"
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Tibfracture.png"
+                 alt="صورة أشعة لكسر عظم الساق عند الأطفال"
                  loading="lazy" />
-            <div class="illustration-caption">صورة أشعة لكسر عظم الساق (الظنبوب) - المصدر: Wikimedia Commons</div>
+            <div class="illustration-caption">صورة أشعة لكسر عظم الساق عند الأطفال (كسر الأطفال الحلزوني) - المصدر: Wikimedia Commons (CC BY-SA 3.0)</div>
+        </div>
+    `,
+
+    // ---- Charcot-Marie-Tooth (CMT) - Foot ----
+    cmtFoot: `
+        <div class="illustration-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Charcot-marie-tooth_foot.jpg"
+                 alt="صورة سريرية لقدم مصابة بمرض شاركو-ماري-توث تظهر تقوس القدم وأصابع المطرقة"
+                 loading="lazy" />
+            <div class="illustration-caption">قدم مصابة بمرض شاركو-ماري-توث (CMT) - تقوس القدم العالي وأصابع المطرقة - المصدر: Wikimedia Commons (CC BY-SA 3.0)</div>
+        </div>
+    `,
+
+    // ---- Muscular Dystrophy - Gowers Sign ----
+    muscularDystrophyGowers: `
+        <div class="illustration-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/Gowers%27s_sign.png"
+                 alt="علامة غاورز - الطفل يتسلق على ساقيه للوقوف بسبب ضعف العضلات"
+                 loading="lazy" />
+            <div class="illustration-caption">علامة غاورز (Gowers' Sign) - الطفل يستخدم يديه للوقوف بسبب ضعف العضلات القريبة - المصدر: Wikimedia Commons (Public Domain, 1879)</div>
+        </div>
+    `,
+
+    // ---- Muscular Dystrophy - Pseudohypertrophy ----
+    muscularDystrophyBody: `
+        <div class="illustration-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Drawing_of_boy_with_Duchenne_muscular_dystrophy.png"
+                 alt="رسم توضيحي لطفل مصاب بالحثل العضلي الدوشيني يظهر تضخم الساقين الكاذب"
+                 loading="lazy" />
+            <div class="illustration-caption">طفل مصاب بالحثل العضلي الدوشيني - تضخم كاذب في الساقين مع ضمور الذراعين - المصدر: Wikimedia Commons (Public Domain)</div>
         </div>
     `
 };
