@@ -140,6 +140,7 @@
 html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -151,6 +152,11 @@ body {
     text-align: right;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding-top: env(safe-area-inset-top, 0);
+    padding-left: env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
 }
 
 .hidden { display: none !important; }
@@ -507,7 +513,7 @@ img { max-width: 100%; height: auto; }
 /* ---- Main Content ---- */
 .main-content {
     margin-top: var(--header-height);
-    padding-bottom: calc(var(--bottom-nav-height) + 20px);
+    padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0) + 20px);
     min-height: calc(100vh - var(--header-height));
 }
 
@@ -1131,13 +1137,14 @@ img { max-width: 100%; height: auto; }
     bottom: 0;
     right: 0;
     left: 0;
-    height: var(--bottom-nav-height);
+    height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0));
     background: white;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-around;
     z-index: 100;
+    padding-top: 6px;
     padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
@@ -1167,7 +1174,7 @@ img { max-width: 100%; height: auto; }
 /* ---- Back to Top ---- */
 .back-to-top {
     position: fixed;
-    bottom: calc(var(--bottom-nav-height) + 16px);
+    bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0) + 16px);
     left: 16px;
     width: 44px;
     height: 44px;
@@ -1421,7 +1428,149 @@ img { max-width: 100%; height: auto; }
     margin-top: -1px;
 }
 
-/* ---- Responsive ---- */
+/* ---- Responsive - Small Phones (iPhone SE, etc.) ---- */
+@media (max-width: 389px) {
+    :root {
+        --header-height: 52px;
+        --bottom-nav-height: 56px;
+    }
+
+    .header-title { font-size: 14px; gap: 6px; }
+    .header-title .header-icon { width: 22px; height: 22px; }
+    .header-content { padding: 0 10px; gap: 8px; }
+
+    .hero-section { padding: 24px 14px; }
+    .hero-content h1 { font-size: 22px; }
+    .hero-content p { font-size: 13px; margin-bottom: 16px; }
+    .hero-badge { font-size: 12px; padding: 6px 14px; }
+
+    .section-container { padding: 16px 10px; }
+    .section-title { font-size: 18px; margin-bottom: 14px; }
+
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .category-card { padding: 14px 8px; }
+    .category-icon { width: 42px; height: 42px; font-size: 22px; margin-bottom: 8px; }
+    .category-card h3 { font-size: 12px; }
+    .category-card p { font-size: 10px; }
+
+    .condition-header { padding: 20px 14px; }
+    .condition-header h1 { font-size: 20px; }
+    .condition-header .subtitle { font-size: 13px; }
+    .condition-badge { font-size: 11px; padding: 3px 10px; }
+
+    .quick-nav-tab { padding: 10px 12px; font-size: 12px; }
+
+    .condition-content { padding: 14px 10px; }
+    .content-section { margin-bottom: 14px; }
+    .section-header { padding: 14px; gap: 10px; }
+    .section-header .section-icon { width: 32px; height: 32px; font-size: 16px; }
+    .section-header h2 { font-size: 15px; }
+    .section-body { padding: 0 14px 14px; }
+    .section-body p { font-size: 13px; line-height: 1.7; margin-bottom: 10px; }
+    .section-body li { font-size: 13px; margin-bottom: 8px; }
+    .section-body h3 { font-size: 15px; margin: 14px 0 8px; }
+    .section-body h4 { font-size: 14px; }
+    .section-body ul, .section-body ol { padding-right: 18px; margin-bottom: 12px; }
+
+    .info-box { padding: 12px; gap: 8px; margin: 12px 0; }
+    .info-box-icon { font-size: 18px; }
+    .info-box-content strong { font-size: 13px; }
+    .info-box-content p { font-size: 12px; }
+
+    .surgery-card { padding: 14px; }
+    .surgery-card h4 { font-size: 15px; }
+    .surgery-card p, .surgery-card li { font-size: 13px; }
+
+    .steps-list { padding-right: 24px; }
+    .step-item::before { right: -24px; width: 22px; height: 22px; font-size: 10px; }
+    .step-item h4 { font-size: 14px; }
+    .step-item p { font-size: 13px; }
+
+    .timeline-container { padding-right: 30px; }
+    .timeline-item { padding: 14px; margin-bottom: 20px; }
+    .timeline-item::before { right: -25px; width: 12px; height: 12px; }
+    .timeline-item h3 { font-size: 15px; }
+    .timeline-item p, .timeline-item li { font-size: 13px; }
+
+    .faq-question { font-size: 13px; }
+    .faq-question .q-icon { width: 24px; height: 24px; font-size: 12px; }
+    .faq-answer { font-size: 13px; padding: 8px 34px 0 0; }
+
+    .qr-grid { grid-template-columns: 1fr; gap: 14px; }
+    .qr-card { padding: 16px; }
+    .qr-card h3 { font-size: 14px; }
+
+    .data-table { min-width: 300px; font-size: 12px; }
+    .data-table th { padding: 8px 10px; }
+    .data-table td { padding: 8px 10px; }
+
+    .comparison-grid { gap: 10px; }
+    .comparison-card { padding: 12px; }
+    .comparison-card h4 { font-size: 14px; }
+    .comparison-card li { font-size: 12px; }
+
+    .illustration-container { padding: 12px; margin: 14px 0; }
+    .illustration-container img { max-height: 200px; }
+    .illustration-caption { font-size: 11px; }
+
+    .disclaimer-banner { padding: 12px; margin: 14px 10px; gap: 8px; }
+    .disclaimer-banner .disc-icon { font-size: 20px; }
+    .disclaimer-banner p { font-size: 12px; }
+
+    .bottom-nav-item { font-size: 10px; padding: 6px 8px; gap: 2px; }
+    .bottom-nav-item svg { width: 20px; height: 20px; }
+
+    .back-to-top { width: 38px; height: 38px; }
+    .back-to-top svg { width: 20px; height: 20px; }
+
+    .condition-list-card { padding: 12px; gap: 10px; }
+    .condition-list-card .card-icon { width: 40px; height: 40px; font-size: 20px; border-radius: 10px; }
+    .condition-list-card .card-info h3 { font-size: 14px; }
+    .condition-list-card .card-info p { font-size: 11px; }
+
+    .nav-header { padding: 18px 14px; }
+    .nav-logo h2 { font-size: 14px; }
+    .nav-link { padding: 10px 14px; font-size: 13px; gap: 10px; }
+    .nav-link svg { width: 18px; height: 18px; }
+    .nav-category { padding: 12px 14px 6px; font-size: 11px; }
+
+    .btn { padding: 8px 14px; font-size: 13px; }
+    .btn-sm { padding: 5px 10px; font-size: 12px; }
+
+    .splash-content h1 { font-size: 22px; }
+    .splash-content p { font-size: 14px; }
+    .splash-icon svg { width: 70px; height: 70px; }
+}
+
+/* ---- Responsive - Standard Phones (iPhone 12/13/14/15, etc.) ---- */
+@media (max-width: 480px) {
+    .hero-content h1 { font-size: 24px; }
+    .hero-section { padding: 28px 16px; }
+
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .category-card { padding: 16px 10px; }
+    .category-icon { width: 48px; height: 48px; font-size: 24px; }
+    .category-card h3 { font-size: 13px; }
+
+    .qr-grid { grid-template-columns: 1fr; }
+
+    .condition-header h1 { font-size: 22px; }
+    .section-header h2 { font-size: 16px; }
+    .section-body p { font-size: 14px; }
+    .section-body li { font-size: 14px; }
+
+    .data-table { min-width: 320px; }
+
+    .condition-list-card .card-icon { width: 44px; height: 44px; }
+}
+
+/* ---- Responsive - Medium screens ---- */
 @media (min-width: 768px) {
     .categories-grid {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
