@@ -491,7 +491,22 @@
             'post-surgery': '#d1fae5',
             'rehab': '#fef3c7',
             'emergency': '#fee2e2',
-            'faq': '#f0f9ff'
+            'faq': '#f0f9ff',
+            'timing': '#cffafe',
+            'instructions': '#dbeafe',
+            'dodont': '#fef3c7',
+            'vitaminc': '#d1fae5',
+            'sideeffects': '#fee2e2',
+            'summary': '#ede9fe',
+            'types': '#fce7f3',
+            'classification': '#fce7f3',
+            'daily-care': '#d1fae5',
+            'diaper-care': '#fef3c7',
+            'positioning': '#cffafe',
+            'mobility': '#dbeafe',
+            'warning-signs': '#fee2e2',
+            'home-care': '#d1fae5',
+            'post-removal': '#ede9fe'
         };
 
         const sectionIcons = {
@@ -507,7 +522,20 @@
             'emergency': '🚨',
             'faq': '❓',
             'types': '📊',
-            'classification': '📊'
+            'classification': '📊',
+            'timing': '⏱️',
+            'instructions': '📝',
+            'dodont': '✅',
+            'vitaminc': '💊',
+            'sideeffects': '⚠️',
+            'summary': '🎯',
+            'daily-care': '🧴',
+            'diaper-care': '👶',
+            'positioning': '🛏️',
+            'mobility': '🚶',
+            'warning-signs': '🚨',
+            'home-care': '🏠',
+            'post-removal': '🔓'
         };
 
         const bgColor = iconColors[section.type] || '#f0f9ff';
