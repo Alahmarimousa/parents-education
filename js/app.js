@@ -506,7 +506,8 @@
             'mobility': '#dbeafe',
             'warning-signs': '#fee2e2',
             'home-care': '#d1fae5',
-            'post-removal': '#ede9fe'
+            'post-removal': '#ede9fe',
+            'remodeling': '#ecfdf5'
         };
 
         const sectionIcons = {
@@ -535,7 +536,8 @@
             'mobility': '🚶',
             'warning-signs': '🚨',
             'home-care': '🏠',
-            'post-removal': '🔓'
+            'post-removal': '🔓',
+            'remodeling': '🦴'
         };
 
         const bgColor = iconColors[section.type] || '#f0f9ff';
