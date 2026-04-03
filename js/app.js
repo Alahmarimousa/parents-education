@@ -330,6 +330,11 @@
                         <h3>الجبيرة الحوضية</h3>
                         <p>دليل العناية الشامل</p>
                     </div>
+                    <div class="category-card" data-page="silicone-gel">
+                        <div class="category-icon cat-surgery">🩹</div>
+                        <h3>جل السيليكون للندبات</h3>
+                        <p>وقاية وعلاج</p>
+                    </div>
                     <div class="category-card" data-page="qr-codes">
                         <div class="category-icon cat-surgery">📱</div>
                         <h3>رموز QR للطباعة</h3>
@@ -413,6 +418,14 @@
                         <div class="card-info">
                             <h3>العناية بالجبيرة الحوضية (البنطلونية)</h3>
                             <p>دليل شامل للعناية بالطفل في الجبيرة الحوضية بعد عملية خلع الورك</p>
+                        </div>
+                        <div class="card-arrow">◀</div>
+                    </div>
+                    <div class="condition-list-card" data-page="silicone-gel">
+                        <div class="card-icon cat-surgery">🩹</div>
+                        <div class="card-info">
+                            <h3>جل السيليكون للوقاية من الندبات</h3>
+                            <p>دليل شامل للوالدين حول استخدام جل ولصقات السيليكون بعد التئام الجروح</p>
                         </div>
                         <div class="card-arrow">◀</div>
                     </div>
