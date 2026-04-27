@@ -1370,28 +1370,39 @@ window.conditionsFractures = [
             </ol>
           </div>
 
-          <h3>كسر الترقوة عند الأطفال - مع الصور الشعاعية</h3>
-          <p>هذه الصور لطفل أصيب بكسر منزاح في الترقوة (السقوط على الكتف). لاحظوا التسلسل الزمني للشفاء وإعادة التشكل:</p>
+          <h3>كسر ترقوة المولود - أشعة حقيقية</h3>
+          <p>هذه أشعة لمولود مع كسر ثنائي في الترقوة (الجهتين) بعد ولادة صعبة. لاحظوا انكسار العظمتين الترقويتين على جانبي الصدر:</p>
 
           <div class="illustration-container">
-            <img src="images/remodeling/remodel_p5_img2.jpg"
-                 alt="أشعة كسر الترقوة عند طفل - الإزاحة الأولية"
+            <img src="images/remodeling/clavicle_newborn_pmc3446140_fig1.jpg"
+                 alt="أشعة صدر مولود توضح كسر ثنائي في الترقوتين"
                  loading="lazy" />
-            <div class="illustration-caption"><strong>المرحلة 1 - الكسر الحاد:</strong> كسر منزاح في منتصف الترقوة. لاحظ الإزاحة الواضحة بين الجزأين والتداخل (Overlapping). يبدو الكسر مخيفاً للأهل، لكن الترقوة تتعامل معه ببراعة.</div>
+            <div class="illustration-caption"><strong>كسر ثنائي في ترقوة المولود:</strong> أشعة الصدر تُظهر انفصالاً وانزياحاً في عظمتي الترقوة من الجانبين (نتيجة عسر كتف أثناء الولادة). رغم خطورة المنظر - شُفي تماماً بدون جراحة بمجرد تثبيت الذراعين برفق لمدة 2-3 أسابيع.</div>
           </div>
 
-          <div class="illustration-container">
-            <img src="images/remodeling/remodel_p5_img3.jpg"
-                 alt="تكون الكالوس العظمي حول كسر الترقوة"
-                 loading="lazy" />
-            <div class="illustration-caption"><strong>المرحلة 2 - بعد 3-4 أسابيع:</strong> تكوّن كالوس عظمي وفير حول مكان الكسر. هذا الانتفاخ هو "العظم الجديد" الذي يربط الجزأين. في هذه المرحلة يستطيع الأهل لمس النتوء تحت الجلد - وهذا طبيعي تماماً.</div>
-          </div>
+          <h3>كسر الترقوة عند الأطفال - مرحلة الكسر ثم تكوّن الكالوس</h3>
+          <p>أشعة لطفل مع كسر منزاح بشكل شديد في الترقوة، ثم بعد 5 أسابيع من العلاج التحفظي (بدون جراحة):</p>
 
           <div class="illustration-container">
-            <img src="images/remodeling/remodel_p5_img4.jpg"
-                 alt="إعادة تشكل كامل للترقوة بعد عدة أشهر"
+            <img src="images/remodeling/clavicle_pmc8774508_fig4.jpg"
+                 alt="أشعة كسر الترقوة عند طفل - قبل وبعد 5 أسابيع من العلاج التحفظي"
                  loading="lazy" />
-            <div class="illustration-caption"><strong>المرحلة 3 - بعد 6-12 شهر:</strong> إعادة تشكل شبه كاملة. الكالوس الزائد تم إزالته بواسطة خلايا هدم العظم (Osteoclasts)، والعظم استعاد شكله الأنبوبي الطبيعي. لا تبقى إعاقة وظيفية.</div>
+            <div class="illustration-caption"><strong>(أ) الإصابة الأولى:</strong> كسر منزاح بشكل شديد في الترقوة اليمنى مع تداخل كامل بين الجزأين. <strong>(ب) بعد 5 أسابيع:</strong> تكوّن كالوس عظمي مبكر يربط الجزأين بقوة - بدون أي جراحة. هذا الكالوس سيُعاد تشكيله خلال الأشهر التالية ليصبح عظماً طبيعياً.</div>
+          </div>
+
+          <h3>درجات إعادة التشكل في كسور الترقوة - مقارنة قبل وبعد</h3>
+          <p>هذه الصور المرجعية تُظهر ثلاث درجات من إعادة التشكل بعد كسور الترقوة عند المراهقين. لاحظ كيف يختفي الكسر تماماً (الصف العلوي) أو جزئياً (الصفان الأوسط والسفلي) عبر الأشهر:</p>
+
+          <div class="illustration-container">
+            <img src="images/remodeling/clavicle_pmc9112778_fig1.jpg"
+                 alt="ثلاث درجات من إعادة تشكل كسور الترقوة - مقارنة بين الإصابة والمتابعة"
+                 loading="lazy" />
+            <div class="illustration-caption">
+              <strong>الصف العلوي - إعادة تشكل كاملة/شبه كاملة (Complete/Near complete):</strong> الكسر اختفى تقريباً بعد المتابعة.<br/>
+              <strong>الصف الأوسط - إعادة تشكل متوسطة (Moderate):</strong> تحسّن واضح لكن مع بقاء بعض البروز.<br/>
+              <strong>الصف السفلي - إعادة تشكل قليلة (Minimal):</strong> كسر مع تشكل عظمي محدود (شائع عند المراهقين الكبار).<br/>
+              <em>هذه الدرجات تثبت أن إعادة التشكل تحدث بدرجات متفاوتة حسب العمر، لكنها كافية لاستعادة وظيفة الكتف الكاملة في معظم الحالات.</em>
+            </div>
           </div>
 
           <h3>لماذا الترقوة تتشكل بهذا الشكل المذهل؟</h3>
@@ -1433,7 +1444,13 @@ window.conditionsFractures = [
             <div class="faq-answer">الرياضات الخفيفة بعد 4-6 أسابيع. الرياضات التلامسية (كرة قدم، رغبي، مصارعة) بعد 8-12 أسبوع وبعد التأكد من عدم وجود ألم بالضغط على الترقوة وحركة كتف كاملة.</div>
           </div>
 
-          <p class="text-muted" style="font-size: 0.85rem; margin-top: 1.5rem;">المصادر: Beaty JH, Kasser JR. Rockwood and Wilkins' Fractures in Children, 9th ed. | Pecci M, Kreher JB. Clavicle Fractures. Am Fam Physician. | Herring JA. Tachdjian's Pediatric Orthopaedics, 6th ed.</p>
+          <p class="text-muted" style="font-size: 0.85rem; margin-top: 1.5rem;">
+            <strong>مصادر الصور الشعاعية:</strong><br/>
+            • صورة كسر ترقوة المولود: Sarman H, et al. <em>Bilateral Clavicle Fracture in Two Newborn Infants.</em> Indian J Pediatr Dermatol. 2012;21(4):553. (PMC3446140 - CC BY-NC 3.0)<br/>
+            • صورة الكسر والكالوس بعد 5 أسابيع: Hoogervorst P, et al. <em>Pediatric Clavicle Fractures and Congenital Pseudarthrosis Unraveled.</em> Children. 2022;9(1):49. (PMC8774508 - CC BY 4.0)<br/>
+            • صور درجات إعادة التشكل: McGraw MA, et al. <em>Clavicle Fracture Remodeling in Adolescents.</em> Orthop J Sports Med. 2022. (PMC9112778 - CC BY-NC-ND 4.0)<br/>
+            <strong>المصادر النصية:</strong> Beaty JH, Kasser JR. Rockwood and Wilkins' Fractures in Children, 9th ed. | Herring JA. Tachdjian's Pediatric Orthopaedics, 6th ed.
+          </p>
         `
       },
       {
