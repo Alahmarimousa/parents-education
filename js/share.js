@@ -68,10 +68,10 @@
         const message = buildMessage(ctx);
         switch (targetId) {
             case 'whatsapp':
-                openExternal('https://wa.me/?text=' + encodeURIComponent(message));
+                shareToWhatsApp(message);
                 break;
             case 'telegram':
-                openExternal('https://t.me/share/url?url=' + encodeURIComponent(ctx.url) +
+                openLink('https://t.me/share/url?url=' + encodeURIComponent(ctx.url) +
                     '&text=' + encodeURIComponent(message));
                 break;
             case 'email':
@@ -91,9 +91,48 @@
         }
     }
 
-    function openExternal(url) {
+    function isMobile() {
+        return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+            (navigator.maxTouchPoints > 1 && /Mac/i.test(navigator.platform || ''));
+    }
+
+    // Handing off to a messaging app must navigate the CURRENT tab. Opening the
+    // link in a new tab makes iOS launch the app without the payload, so the
+    // user arrives on their chat list with nothing to send. On desktop there is
+    // no app hand-off, so a new tab is used to keep the portal open.
+    function openLink(url) {
+        if (isMobile()) {
+            closeSheet();
+            location.assign(url);
+            return;
+        }
         const win = window.open(url, '_blank', 'noopener');
-        if (!win) location.href = url;
+        if (!win) location.assign(url);
+    }
+
+    // wa.me/?text= targets WhatsApp's root path, so the universal link handler
+    // has nothing to act on and just opens the app. The whatsapp:// scheme
+    // invokes the send intent, which is what raises the "send to..." picker
+    // with the message already filled in.
+    function shareToWhatsApp(message) {
+        const text = encodeURIComponent(message);
+        const webUrl = 'https://api.whatsapp.com/send?text=' + text;
+        if (!isMobile()) {
+            openLink(webUrl);
+            return;
+        }
+        closeSheet();
+        // Armed before the hand-off so it still runs if the browser rejects the
+        // scheme outright. If WhatsApp does open, this page goes hidden and the
+        // fallback is skipped.
+        setTimeout(() => {
+            if (document.visibilityState === 'visible') location.assign(webUrl);
+        }, 1500);
+        try {
+            location.assign('whatsapp://send?text=' + text);
+        } catch (e) {
+            /* Scheme unsupported - the fallback above takes over. */
+        }
     }
 
     function nativeShare(ctx) {
