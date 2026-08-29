@@ -1428,6 +1428,325 @@ img { max-width: 100%; height: auto; }
     margin-top: -1px;
 }
 
+/* ============================================
+   Sharing - share row, section share, sheet, toast
+   ============================================ */
+
+/* ---- Share button in the header ---- */
+.share-btn { color: var(--primary); }
+.share-btn:hover { background: var(--primary-bg); }
+
+/* ---- Share row under a page title ---- */
+.share-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.share-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    min-height: 44px;
+    border-radius: 50px;
+    border: none;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.22);
+    color: white;
+    backdrop-filter: blur(5px);
+    transition: var(--transition);
+}
+
+.share-chip:hover { background: rgba(255, 255, 255, 0.34); }
+.share-chip:active { transform: scale(0.97); }
+.share-chip svg { flex-shrink: 0; }
+
+.share-chip-wa {
+    background: #25d366;
+    color: white;
+    box-shadow: 0 2px 10px rgba(37, 211, 102, 0.35);
+}
+
+.share-chip-wa:hover { background: #1fb855; }
+
+/* ---- Share prompt on the home page ---- */
+.share-banner {
+    max-width: 900px;
+    margin: 0 auto 8px;
+    padding: 18px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+}
+
+.share-banner-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.share-banner-text {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.share-banner-text strong {
+    display: block;
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.share-banner-text p {
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.92;
+}
+
+.share-banner .share-row {
+    margin-top: 0;
+    flex: 0 0 auto;
+}
+
+/* ---- Per-section share button ---- */
+.section-share {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: var(--bg-section);
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.section-share:hover {
+    background: var(--primary-bg);
+    color: var(--primary);
+}
+
+.section-share:active { transform: scale(0.92); }
+
+.btn-share {
+    background: var(--primary-bg);
+    color: var(--primary-dark);
+}
+
+.btn-share:hover { background: var(--primary-light); }
+
+/* ---- Share sheet ---- */
+body.share-open { overflow: hidden; }
+
+.share-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 998;
+    background: rgba(15, 23, 42, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition), visibility var(--transition);
+}
+
+.share-backdrop.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.share-sheet {
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 10px 20px calc(24px + env(safe-area-inset-bottom, 0));
+    background: white;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
+    transform: translateY(105%);
+    visibility: hidden;
+    transition: transform var(--transition), visibility var(--transition);
+    direction: rtl;
+    text-align: right;
+}
+
+.share-sheet.visible {
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.share-sheet-grip {
+    width: 44px;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--border);
+    margin: 0 auto 14px;
+}
+
+.share-sheet-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.share-sheet-head h3 {
+    flex: 1;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.share-sheet-close {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--bg-section);
+    color: var(--text-secondary);
+    font-size: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.share-sheet-close:hover { background: var(--border-light); color: var(--text); }
+
+.share-sheet-topic {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+    line-height: 1.6;
+}
+
+.share-sheet-topic:empty { display: none; }
+
+.share-targets {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.share-target {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 6px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    background: white;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.share-target:hover {
+    border-color: var(--primary-light);
+    background: var(--primary-bg);
+}
+
+.share-target:active { transform: scale(0.96); }
+
+.share-target-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--bg-section);
+    color: var(--text-secondary);
+}
+
+.share-target-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+}
+
+.share-target-whatsapp .share-target-icon { background: #e7f9ee; color: #25d366; }
+.share-target-telegram .share-target-icon { background: #e5f4fd; color: #229ed9; }
+.share-target-native .share-target-icon,
+.share-target-copy .share-target-icon { background: var(--primary-bg); color: var(--primary); }
+.share-target-email .share-target-icon { background: #ede9fe; color: var(--accent); }
+.share-target-print .share-target-icon { background: var(--warning-bg); color: var(--secondary-dark); }
+
+.share-link-row {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-section);
+    border: 1px dashed var(--border);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.share-link-row:hover { border-color: var(--primary); }
+
+.share-link-text {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+    word-break: break-all;
+    line-height: 1.5;
+}
+
+.share-sheet-note {
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-light);
+}
+
+/* ---- Copy confirmation toast ---- */
+.share-toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--bottom-nav-height) + 24px + env(safe-area-inset-bottom, 0));
+    transform: translate(-50%, 20px);
+    z-index: 1000;
+    max-width: 88vw;
+    padding: 12px 22px;
+    border-radius: 50px;
+    background: var(--text);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+}
+
+.share-toast.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
 /* ---- Responsive - Small Phones (iPhone SE, etc.) ---- */
 @media (max-width: 389px) {
     :root {
@@ -1621,8 +1940,36 @@ img { max-width: 100%; height: auto; }
     }
 }
 
+/* ---- Sharing - small phones ---- */
+@media (max-width: 389px) {
+    .share-chip {
+        padding: 9px 14px;
+        font-size: 13px;
+    }
+
+    .share-banner {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .share-banner .share-row { flex: 1 1 100%; }
+    .share-banner .share-chip { flex: 1 1 auto; justify-content: center; }
+
+    .share-targets { gap: 10px; }
+    .share-target { padding: 12px 4px; }
+
+    .share-target-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .share-target-label { font-size: 11px; }
+}
+
 /* ---- Print ---- */
 @media print {
+    .share-row, .section-share, .share-banner,
+    .share-sheet, .share-backdrop, .share-toast { display: none !important; }
     .content-section { break-inside: avoid; }
     .section-body { display: block !important; }
     body { font-size: 12pt; }

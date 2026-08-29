@@ -9,8 +9,11 @@
     // ---- App State ----
     const state = {
         currentPage: 'home',
+        currentTitle: 'بوابة تثقيف الأسرة',
         sideNavOpen: false,
-        searchOpen: false
+        searchOpen: false,
+        // Section index requested by a shared deep link (#...&section=3)
+        pendingSection: null
     };
 
     // ---- DOM Elements ----
@@ -33,6 +36,7 @@
         initNavigation();
         initSearch();
         initBackToTop();
+        initSharing();
         renderPage('home');
     });
 
@@ -80,16 +84,23 @@
 
     function navigateTo(page) {
         state.currentPage = page;
+        // renderPage consumes pendingSection, so read it first: a shared section
+        // link scrolls to that section instead of to the top of the page.
+        const hasPendingSection = state.pendingSection !== null && state.pendingSection !== undefined;
         renderPage(page);
         updateActiveNav(page);
         // Update hash with page param while preserving access token
         const params = new URLSearchParams(window.location.hash.substring(1));
         params.set('page', page);
+        // A shared section link is consumed on arrival; don't leave it in the URL.
+        params.delete('section');
         const newHash = '#' + params.toString();
         if (window.location.hash !== newHash) {
             history.replaceState(null, '', newHash);
         }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (!hasPendingSection) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         closeSearch();
     }
 
@@ -204,39 +215,139 @@
         });
     }
 
+    // ---- Sharing ----
+    const SVG_SHARE = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92" fill="currentColor"/></svg>';
+    const SVG_WHATSAPP = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413" fill="currentColor"/></svg>';
+
+    const esc = (v) => (window.PortalShare ? window.PortalShare.escapeHtml(v) : String(v == null ? '' : v));
+
+    function shareAttrs(page, title, subtitle, section) {
+        let attrs = ` data-share-page="${esc(page)}" data-share-title="${esc(title)}"`;
+        if (subtitle) attrs += ` data-share-subtitle="${esc(subtitle)}"`;
+        if (section !== undefined && section !== null) attrs += ` data-share-section="${esc(section)}"`;
+        return attrs;
+    }
+
+    // Prominent "send this to the family" row shown under every page title.
+    function renderShareRow(page, title, subtitle) {
+        const attrs = shareAttrs(page, title, subtitle);
+        return `
+            <div class="share-row">
+                <button type="button" class="share-chip share-chip-wa" data-share="whatsapp"${attrs}>
+                    ${SVG_WHATSAPP}<span>أرسل عبر واتساب</span>
+                </button>
+                <button type="button" class="share-chip" data-share="sheet"${attrs}>
+                    ${SVG_SHARE}<span>مشاركة</span>
+                </button>
+            </div>
+        `;
+    }
+
+    // Small share button on a single section, so parents can send just the part
+    // that matters (e.g. the warning signs) instead of the whole topic.
+    function renderSectionShareBtn(ctx, section, index) {
+        if (!ctx || !ctx.page) return '';
+        const title = `${ctx.title} - ${section.title}`;
+        return `
+            <button type="button" class="section-share" data-share="sheet"${shareAttrs(ctx.page, title, ctx.subtitle, index)}
+                    aria-label="مشاركة قسم ${esc(section.title)}" title="مشاركة هذا القسم">
+                ${SVG_SHARE}
+            </button>
+        `;
+    }
+
+    function initSharing() {
+        // Capture phase: a share button nested inside a collapsible section
+        // header must not also toggle that section.
+        document.addEventListener('click', (e) => {
+            const trigger = e.target.closest('[data-share]');
+            if (!trigger) return;
+            e.preventDefault();
+            e.stopPropagation();
+            window.PortalShare.share({
+                target: trigger.dataset.share,
+                page: trigger.dataset.sharePage || state.currentPage,
+                section: trigger.dataset.shareSection,
+                title: trigger.dataset.shareTitle || state.currentTitle,
+                subtitle: trigger.dataset.shareSubtitle || ''
+            });
+        }, true);
+    }
+
     // ---- Page Rendering ----
     function renderPage(page) {
         const main = $('#mainContent');
         switch (page) {
             case 'home':
+                state.currentTitle = 'بوابة تثقيف الأسرة - وحدة جراحة عظام الأطفال';
                 main.innerHTML = renderHomePage();
                 bindHomeEvents();
                 break;
             case 'categories':
+                state.currentTitle = 'جميع الأقسام';
                 main.innerHTML = renderCategoriesPage();
                 bindCategoryEvents();
                 break;
             case 'surgery-guide':
+                state.currentTitle = 'دليل ما قبل وبعد الجراحة';
                 main.innerHTML = renderSurgeryGuidePage();
                 bindSectionToggles();
+                openRequestedSection(main, false);
                 break;
             case 'qr-codes':
+                state.currentTitle = 'رموز QR للطباعة';
                 main.innerHTML = renderQRPage();
                 generateQRCodes();
                 break;
             default:
                 const condition = findCondition(page);
                 if (condition) {
+                    state.currentTitle = condition.name;
                     main.innerHTML = renderConditionPage(condition);
                     bindSectionToggles();
                     bindQuickNav();
                     bindFAQToggles();
-                    // Auto-open first section
-                    const firstSection = main.querySelector('.section-header');
-                    if (firstSection) firstSection.click();
+                    openRequestedSection(main, true);
                 }
                 break;
         }
+    }
+
+    // Opens the section a shared link asked for (#...&section=3) and scrolls to
+    // it. Falls back to the first section when the page opens one by default.
+    function openRequestedSection(main, autoOpenFirst) {
+        const sections = main.querySelectorAll('.content-section');
+        const requested = parseInt(state.pendingSection, 10);
+        state.pendingSection = null;
+        if (!sections.length) return;
+
+        const hasRequest = !isNaN(requested) && requested >= 0 && requested < sections.length;
+        if (!hasRequest && !autoOpenFirst) return;
+
+        const index = hasRequest ? requested : 0;
+        const header = sections[index].querySelector('.section-header');
+        if (header) header.click();
+
+        if (!hasRequest) return;
+
+        const tabs = main.querySelectorAll('.quick-nav-tab');
+        tabs.forEach((t, i) => t.classList.toggle('active', i === index));
+        scrollToWhenVisible(sections[index]);
+    }
+
+    // A deep link is handled while the splash screen may still be covering the
+    // app, and scrollIntoView does nothing on an element without a layout box.
+    // Wait for the app to be on screen before scrolling.
+    function scrollToWhenVisible(target) {
+        let attempts = 0;
+        (function attempt() {
+            const appVisible = !$('#app').classList.contains('hidden');
+            if (appVisible && target.getBoundingClientRect().height > 0) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            if (attempts++ < 60) setTimeout(attempt, 100);
+        })();
     }
 
     function findCondition(id) {
@@ -267,6 +378,15 @@
             <div class="disclaimer-banner">
                 <div class="disc-icon">⚕️</div>
                 <p><strong>تنبيه مهم:</strong> هذا المحتوى للأغراض التعليمية فقط ولا يُغني عن استشارة الطبيب المختص. استشر طبيب طفلك دائماً قبل اتخاذ أي قرارات علاجية.</p>
+            </div>
+
+            <div class="share-banner">
+                <div class="share-banner-icon">💬</div>
+                <div class="share-banner-text">
+                    <strong>شارك البوابة مع أسرتك</strong>
+                    <p>أرسل الرابط للأم أو الأب أو الجدّة أو من يعتني بالطفل، ليطّلعوا على نفس المعلومات في أي وقت.</p>
+                </div>
+                ${renderShareRow('home', 'بوابة تثقيف الأسرة - وحدة جراحة عظام الأطفال', 'دليلكم الشامل لفهم حالات عظام الأطفال وعلاجاتها')}
             </div>
 
             <div class="section-container">
@@ -377,6 +497,7 @@
             <div class="condition-header" style="background: linear-gradient(135deg, #0e7490, #155e75);">
                 <h1>جميع الأقسام</h1>
                 <p class="subtitle">تصفح جميع الحالات والمواضيع المتاحة</p>
+                ${renderShareRow('categories', 'جميع الأقسام - بوابة تثقيف الأسرة', 'تصفح جميع الحالات والمواضيع المتاحة')}
             </div>
             <div class="section-container categories-page">
                 ${groups.map(g => `
@@ -449,7 +570,12 @@
             <button class="quick-nav-tab${i === 0 ? ' active' : ''}" data-section="section-${i}">${s.title}</button>
         `).join('');
 
-        const sectionsHtml = sections.map((s, i) => renderSection(s, i)).join('');
+        const shareCtx = {
+            page: condition.id,
+            title: condition.name,
+            subtitle: condition.shortDesc || ''
+        };
+        const sectionsHtml = sections.map((s, i) => renderSection(s, i, shareCtx)).join('');
 
         return `
             <div class="condition-header">
@@ -465,6 +591,7 @@
                         ${condition.badges.map(b => `<span class="condition-badge">${b}</span>`).join('')}
                     </div>
                 ` : ''}
+                ${renderShareRow(condition.id, condition.name, condition.shortDesc || '')}
             </div>
 
             <div class="quick-nav">
@@ -479,7 +606,7 @@
         `;
     }
 
-    function renderSection(section, index) {
+    function renderSection(section, index, shareCtx) {
         const iconColors = {
             'overview': '#dbeafe',
             'causes': '#fce7f3',
@@ -548,6 +675,7 @@
                 <div class="section-header" data-target="section-body-${index}">
                     <div class="section-icon" style="background: ${bgColor}">${icon}</div>
                     <h2>${section.title}</h2>
+                    ${renderSectionShareBtn(shareCtx, section, index)}
                     <svg class="toggle-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" fill="currentColor"/></svg>
                 </div>
                 <div class="section-body" id="section-body-${index}">
@@ -611,6 +739,11 @@
     // ---- Surgery Guide Page ----
     function renderSurgeryGuidePage() {
         const guide = window.surgeryGuideData || {};
+        const guideShareCtx = {
+            page: 'surgery-guide',
+            title: 'دليل ما قبل وبعد الجراحة',
+            subtitle: 'تعليمات شاملة للتحضير للعمليات الجراحية والعناية بعدها'
+        };
         return `
             <div class="condition-header" style="background: linear-gradient(135deg, #059669, #047857);">
                 <div class="breadcrumb">
@@ -620,9 +753,10 @@
                 </div>
                 <h1>دليل ما قبل وبعد الجراحة</h1>
                 <p class="subtitle">كل ما تحتاج معرفته للتحضير لعملية طفلك والعناية به بعدها</p>
+                ${renderShareRow('surgery-guide', 'دليل ما قبل وبعد الجراحة', 'تعليمات شاملة للتحضير للعمليات الجراحية والعناية بعدها')}
             </div>
             <div class="condition-content">
-                ${(guide.sections || []).map((s, i) => renderSection(s, i)).join('')}
+                ${(guide.sections || []).map((s, i) => renderSection(s, i, guideShareCtx)).join('')}
             </div>
         `;
     }
@@ -651,6 +785,9 @@
                             <canvas class="qr-canvas" data-page="${c.id}"></canvas>
                             <div class="qr-actions">
                                 <button class="btn btn-sm btn-primary qr-print" data-id="${c.id}">🖨️ طباعة</button>
+                                <button type="button" class="btn btn-sm btn-share" data-share="sheet"
+                                        data-share-page="${c.id}" data-share-title="${esc(c.name)}"
+                                        data-share-subtitle="${esc(c.shortDesc || '')}">🔗 مشاركة</button>
                             </div>
                         </div>
                     `).join('')}
@@ -660,12 +797,11 @@
     }
 
     function generateQRCodes() {
-        const ACCESS_TOKEN = 'PedOrtho-Portal-2026';
-        const BASE_URL = 'https://alahmarimousa.github.io/parents-education/';
-
         $$('.qr-canvas').forEach(canvasEl => {
             const page = canvasEl.dataset.page;
-            const url = `${BASE_URL}#access=${ACCESS_TOKEN}&page=${page}`;
+            // Same builder the share links use, so a scanned code and a shared
+            // link always open the identical URL.
+            const url = window.PortalShare.buildUrl(page);
 
             // Generate QR code on canvas using built-in generator
             const size = 200;
@@ -1093,16 +1229,29 @@
         return params.get('page') || null;
     }
 
+    function getSectionFromHash() {
+        const hash = window.location.hash;
+        if (!hash) return null;
+        const params = new URLSearchParams(hash.substring(1));
+        return params.get('section');
+    }
+
     window.addEventListener('hashchange', () => {
         const page = getPageFromHash();
-        if (page && page !== state.currentPage) {
+        const section = getSectionFromHash();
+        if (page && (page !== state.currentPage || section !== null)) {
+            state.pendingSection = section;
             navigateTo(page);
         }
     });
 
     // Check initial page from hash (set by access-gate.js)
     if (window.__INITIAL_PAGE__) {
-        setTimeout(() => navigateTo(window.__INITIAL_PAGE__), 2000);
+        const initialSection = getSectionFromHash();
+        setTimeout(() => {
+            state.pendingSection = initialSection;
+            navigateTo(window.__INITIAL_PAGE__);
+        }, 2000);
     }
 
     // Expose navigateTo globally for inline usage
