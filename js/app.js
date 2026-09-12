@@ -830,8 +830,53 @@
     }
 
     // ---- QR Code Page ----
+
+    // One printable QR card. `section` is the index of a section inside a
+    // combined guide page; omit it to point at the whole page.
+    function renderQRCard(o) {
+        const sectionAttr = (o.section === undefined || o.section === null)
+            ? '' : ` data-section="${o.section}"`;
+        const shareSection = (o.section === undefined || o.section === null)
+            ? '' : ` data-share-section="${o.section}"`;
+        // Section titles carry the English name in brackets. Splitting it onto
+        // its own line keeps the cards a uniform height so the codes line up,
+        // and it stays inside the h3 so printing still includes it.
+        const m = /^(.*?)\s*\(([^()]*)\)\s*$/.exec(o.title);
+        const head = m ? m[1] : o.title;
+        const sub = m ? m[2] : '';
+        return `
+            <div class="qr-card" data-condition-id="${esc(o.id)}">
+                <h3>${o.icon ? o.icon + ' ' : ''}${esc(head)}${sub ? `<span class="qr-en">${esc(sub)}</span>` : ''}</h3>
+                <canvas class="qr-canvas" data-page="${esc(o.id)}"${sectionAttr}></canvas>
+                <div class="qr-actions">
+                    <button class="btn btn-sm btn-primary qr-print" data-id="${esc(o.id)}">🖨️ طباعة</button>
+                    <button type="button" class="btn btn-sm btn-share" data-share="sheet"
+                            data-share-page="${esc(o.id)}"${shareSection} data-share-title="${esc(o.title)}"
+                            data-share-subtitle="${esc(o.subtitle || '')}">🔗 مشاركة</button>
+                </div>
+            </div>
+        `;
+    }
+
+    // Sections of a combined guide, as individually shareable QR cards. The
+    // index section is not a procedure, so it is left out.
+    function guideSectionCards(data, page, subtitle) {
+        return (data && data.sections ? data.sections : [])
+            .map((s, i) => ({ s, i }))
+            .filter(({ s }) => s.type !== 'guide-index')
+            .map(({ s, i }) => renderQRCard({
+                id: page, section: i, title: s.title, subtitle
+            })).join('');
+    }
+
     function renderQRPage() {
         const allConditions = getAllConditions();
+        const procedureCards = guideSectionCards(
+            window.proceduresGuideData, 'procedures-guide',
+            'تعليمات ما بعد العملية - بوابة تثقيف الأسرة');
+        const surgeryCards = guideSectionCards(
+            window.surgeryGuideData, 'surgery-guide',
+            'دليل ما قبل وبعد الجراحة - بوابة تثقيف الأسرة');
 
         return `
             <div class="condition-header" style="background: linear-gradient(135deg, #7c3aed, #5b21b6);">
@@ -843,23 +888,37 @@
                     <div class="info-box-icon">💡</div>
                     <div class="info-box-content">
                         <strong>كيفية الاستخدام</strong>
-                        <p>اطبع هذه الرموز وضعها في العيادة أو غرف الانتظار ليتمكن المرضى وأسرهم من الوصول للمعلومات بسهولة عبر هواتفهم.</p>
+                        <p>اطبع هذه الرموز وضعها في العيادة أو غرف الانتظار ليتمكن المرضى وأسرهم من الوصول للمعلومات بسهولة عبر هواتفهم. كل رمز يفتح موضوعه مباشرةً.</p>
                     </div>
                 </div>
                 <div class="qr-grid" id="qrGrid">
-                    ${allConditions.map(c => `
-                        <div class="qr-card" data-condition-id="${c.id}">
-                            <h3>${c.icon} ${c.name}</h3>
-                            <canvas class="qr-canvas" data-page="${c.id}"></canvas>
-                            <div class="qr-actions">
-                                <button class="btn btn-sm btn-primary qr-print" data-id="${c.id}">🖨️ طباعة</button>
-                                <button type="button" class="btn btn-sm btn-share" data-share="sheet"
-                                        data-share-page="${c.id}" data-share-title="${esc(c.name)}"
-                                        data-share-subtitle="${esc(c.shortDesc || '')}">🔗 مشاركة</button>
-                            </div>
-                        </div>
-                    `).join('')}
+                    ${allConditions.map(c => renderQRCard({
+                        id: c.id, icon: c.icon, title: c.name, subtitle: c.shortDesc || ''
+                    })).join('')}
                 </div>
+
+                ${procedureCards ? `
+                <div class="section-title">
+                    <div class="title-icon cat-surgery">🔪</div>
+                    رمز لكل عملية على حدة
+                </div>
+                <div class="info-box">
+                    <div class="info-box-icon">📩</div>
+                    <div class="info-box-content">
+                        <strong>أرسل تعليمات عملية واحدة فقط</strong>
+                        <p>كل رمز هنا يفتح تعليمات عمليته مباشرةً دون أن يبحث الأهل داخل الدليل. اطبعه وأرفقه بورقة الخروج، أو اضغط «مشاركة» لإرساله عبر واتساب.</p>
+                    </div>
+                </div>
+                <div class="qr-grid">${procedureCards}</div>
+                ` : ''}
+
+                ${surgeryCards ? `
+                <div class="section-title">
+                    <div class="title-icon cat-surgery">📋</div>
+                    أقسام دليل ما قبل وبعد الجراحة
+                </div>
+                <div class="qr-grid">${surgeryCards}</div>
+                ` : ''}
             </div>
         `;
     }
@@ -867,9 +926,12 @@
     function generateQRCodes() {
         $$('.qr-canvas').forEach(canvasEl => {
             const page = canvasEl.dataset.page;
+            // A section-scoped card carries the section index, so the code opens
+            // that procedure directly instead of the top of the guide.
+            const section = canvasEl.dataset.section;
             // Same builder the share links use, so a scanned code and a shared
             // link always open the identical URL.
-            const url = window.PortalShare.buildUrl(page);
+            const url = window.PortalShare.buildUrl(page, section);
 
             // Generate QR code on canvas using built-in generator
             const size = 200;
