@@ -25,6 +25,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Cache-bust asset URLs
+        # Assets are referenced by bare path, so a returning phone keeps serving
+        # the JS and CSS it already has and never sees an update. Stamping the
+        # commit sha onto each URL at publish time makes every deploy a new URL.
+        run: |
+          V="${GITHUB_SHA::8}"
+          sed -i -E "s#(href=\"css/[^\"?]+\.css)\"#\1?v=$V\"#g; s#(src=\"js/[^\"?]+\.js)\"#\1?v=$V\"#g" index.html
+          echo "stamped assets with v=$V"
+          grep -E 'css/styles|js/app\.js' index.html
       - name: Strip internal files from the published site
         # The whole checkout is uploaded, so anything left here is publicly
         # downloadable. docs/ holds clinical review material (the surgeon's
