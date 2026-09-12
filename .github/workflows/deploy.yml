@@ -38,8 +38,14 @@ jobs:
         # The whole checkout is uploaded, so anything left here is publicly
         # downloadable. docs/ holds clinical review material (the surgeon's
         # returned worksheet, correction records) and tools/ is the build
-        # scripts - neither belongs on a parent-facing site.
-        run: rm -rf docs tools
+        # scripts. .claude/ carries local tool settings including a personal
+        # filesystem path, and .DS_Store is macOS metadata. None of it belongs
+        # on a parent-facing site.
+        run: |
+          rm -rf docs tools .claude
+          find . -name '.DS_Store' -delete
+          echo "published tree:"
+          ls -A
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
