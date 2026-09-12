@@ -925,7 +925,9 @@ img { max-width: 100%; height: auto; }
     flex: 1;
 }
 
-.info-box-content strong {
+/* Only the box's own heading is a block. A descendant selector here would also
+   turn inline <strong> inside the body text into a block, breaking the line. */
+.info-box-content > strong {
     display: block;
     margin-bottom: 4px;
     font-size: 15px;
@@ -1796,7 +1798,7 @@ body.share-open { overflow: hidden; }
 
     .info-box { padding: 12px; gap: 8px; margin: 12px 0; }
     .info-box-icon { font-size: 18px; }
-    .info-box-content strong { font-size: 13px; }
+    .info-box-content > strong { font-size: 13px; }
     .info-box-content p { font-size: 12px; }
 
     .surgery-card { padding: 14px; }
