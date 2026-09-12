@@ -939,6 +939,15 @@ img { max-width: 100%; height: auto; }
     line-height: 1.6;
 }
 
+/* Closing line of a red-flag box: where to go in an emergency. Set apart from
+   the list of signs above it so it reads as the instruction, not another sign. */
+.info-box-content p.emergency-note {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    font-size: 15px;
+}
+
 /* ---- Steps / Timeline ---- */
 .steps-list {
     position: relative;

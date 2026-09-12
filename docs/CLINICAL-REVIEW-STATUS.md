@@ -1,9 +1,14 @@
 # Post-operative instructions — clinical review status
 
-**Status: drafted, awaiting clinical review.** The Arabic content in
-`js/data/procedures-guide.js` covers 15 procedures. It was written from general paediatric
-orthopaedic practice, not from this unit's protocols, and the surgeon has the correction
-worksheet. Nothing below has been confirmed yet.
+**Status: round 1 of clinical review applied and deployed.** The Arabic content in
+`js/data/procedures-guide.js` covers 15 procedures. It was drafted from general paediatric
+orthopaedic practice, then corrected by the surgeon in review round 1 (see
+`corrections-round-1.md`): 26 corrections across 13 procedures, all applied.
+
+Still drafted-but-unconfirmed: the 14 worksheet rows that were deleted rather than answered,
+listed in `corrections-round-1.md`. Several of them govern instructions parents act on -
+K-wire removal and weight-bearing timings, heterotopic ossification prophylaxis, NSAIDs and
+union - so they remain the first thing to settle in round 2.
 
 ## Where things live
 
@@ -30,11 +35,13 @@ Corrections may arrive as the filled worksheet, as tracked changes in the Arabic
 These could not be drafted at all and are currently missing from the guide:
 
 - **Unit / hospital name** — the document says only "وحدة جراحة عظام الأطفال".
-- **Phone number for the red-flag boxes.** Every danger box tells parents to go to the
-  emergency department but gives them no number to call first. This is the most important gap.
 - **Clinic / appointments line.**
 - **Physiotherapy pathway** — in-house or external referral, and whether a printed home
   programme is handed out.
+
+Settled in round 1: the red-flag boxes now close with
+"في حالة الطوارئ - مراجعة أقرب طوارئ لديكم" rather than a phone number, at the
+surgeon's instruction.
 
 ## House rules chosen, open to reversal
 

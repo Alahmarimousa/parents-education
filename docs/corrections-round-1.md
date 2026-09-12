@@ -4,7 +4,8 @@ Extracted from the returned Pages worksheet. The corrections were typed **over t
 "What the draft currently says" column** rather than into the "Your correction" column,
 so each entry below is old value -> new value for that row.
 
-**Not yet applied to the Arabic content except where noted. Not committed.**
+**All 26 content corrections below have been applied to the Arabic content.**
+The deleted rows have not been acted on — see that section.
 
 ## Content corrections
 
@@ -121,8 +122,8 @@ the drafted text stands until confirmed.**
 
 ## Still outstanding
 
-- **Phone number for the red-flag boxes** — not supplied. Every danger box still tells
-  parents to attend the emergency department with no number to call.
+- ~~Phone number for the red-flag boxes~~ — settled: the boxes now close with
+  "في حالة الطوارئ - مراجعة أقرب طوارئ لديكم" instead of a number.
 - **Unit / hospital name** — not supplied.
 - **Clinic / appointments line** — not supplied.
 - Section C (procedures to add, tone, things parents ask) — left blank.

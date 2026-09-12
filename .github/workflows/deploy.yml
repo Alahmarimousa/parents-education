@@ -25,6 +25,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Strip internal files from the published site
+        # The whole checkout is uploaded, so anything left here is publicly
+        # downloadable. docs/ holds clinical review material (the surgeon's
+        # returned worksheet, correction records) and tools/ is the build
+        # scripts - neither belongs on a parent-facing site.
+        run: rm -rf docs tools
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
