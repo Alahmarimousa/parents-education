@@ -199,6 +199,16 @@
             shortDesc: 'تعليمات شاملة للتحضير للعمليات الجراحية والعناية بعدها',
             keywords: ['جراحة', 'عملية', 'تحضير', 'تخدير', 'ما بعد', 'ما قبل']
         });
+        // Add procedure-specific post-op guide
+        conditions.push({
+            id: 'procedures-guide',
+            name: 'تعليمات ما بعد العمليات الجراحية',
+            icon: '🏥',
+            shortDesc: 'تعليمات مفصّلة لكل عملية: الجبيرة، الأدوية، المتابعة، التأهيل والأجهزة',
+            keywords: ['عملية', 'جراحة', 'بعد العملية', 'خلع الورك', 'انزلاق', 'قطع عظمي',
+                       'شريحة', 'توجيه النمو', 'إطالة', 'وتر أخيل', 'دمج', 'الشلل الدماغي',
+                       'تأهيل', 'أجهزة تقويمية']
+        });
         // Add cast care sections
         if (window.castCareData) conditions.push(...window.castCareData);
         return conditions;
@@ -292,6 +302,14 @@
                 state.currentTitle = 'دليل ما قبل وبعد الجراحة';
                 main.innerHTML = renderSurgeryGuidePage();
                 bindSectionToggles();
+                bindFAQToggles();
+                openRequestedSection(main, false);
+                break;
+            case 'procedures-guide':
+                state.currentTitle = 'تعليمات ما بعد العمليات الجراحية';
+                main.innerHTML = renderProceduresGuidePage();
+                bindSectionToggles();
+                bindFAQToggles();
                 openRequestedSection(main, false);
                 break;
             case 'qr-codes':
@@ -440,6 +458,11 @@
                         <h3>دليل ما قبل وبعد الجراحة</h3>
                         <p>تعليمات شاملة</p>
                     </div>
+                    <div class="category-card" data-page="procedures-guide">
+                        <div class="category-icon cat-surgery">🔪</div>
+                        <h3>تعليمات ما بعد العمليات</h3>
+                        <p>حسب نوع العملية</p>
+                    </div>
                     <div class="category-card" data-page="cast-care">
                         <div class="category-icon cat-surgery">🦴</div>
                         <h3>العناية بالجبيرة</h3>
@@ -523,6 +546,14 @@
                         <div class="card-info">
                             <h3>دليل ما قبل وبعد الجراحة</h3>
                             <p>تعليمات شاملة للتحضير للعمليات والعناية بعدها</p>
+                        </div>
+                        <div class="card-arrow">◀</div>
+                    </div>
+                    <div class="condition-list-card" data-page="procedures-guide">
+                        <div class="card-icon cat-surgery">🔪</div>
+                        <div class="card-info">
+                            <h3>تعليمات ما بعد العمليات الجراحية</h3>
+                            <p>تعليمات مفصّلة لكل عملية: الورك، الفخذ، الركبة، القدم والحالات العصبية</p>
                         </div>
                         <div class="card-arrow">◀</div>
                     </div>
@@ -634,7 +665,13 @@
             'warning-signs': '#fee2e2',
             'home-care': '#d1fae5',
             'post-removal': '#ede9fe',
-            'remodeling': '#ecfdf5'
+            'remodeling': '#ecfdf5',
+            'guide-index': '#e0e7ff',
+            'proc-hip': '#ede9fe',
+            'proc-femur': '#cffafe',
+            'proc-neuro': '#fce7f3',
+            'proc-foot': '#d1fae5',
+            'proc-knee': '#fef3c7'
         };
 
         const sectionIcons = {
@@ -664,7 +701,13 @@
             'warning-signs': '🚨',
             'home-care': '🏠',
             'post-removal': '🔓',
-            'remodeling': '🦴'
+            'remodeling': '🦴',
+            'guide-index': '🗂️',
+            'proc-hip': '🦴',
+            'proc-femur': '🦵',
+            'proc-neuro': '🧠',
+            'proc-foot': '🦶',
+            'proc-knee': '🦵'
         };
 
         const bgColor = iconColors[section.type] || '#f0f9ff';
@@ -757,6 +800,31 @@
             </div>
             <div class="condition-content">
                 ${(guide.sections || []).map((s, i) => renderSection(s, i, guideShareCtx)).join('')}
+            </div>
+        `;
+    }
+
+    // ---- Procedure-Specific Post-Op Guide Page ----
+    function renderProceduresGuidePage() {
+        const guide = window.proceduresGuideData || {};
+        const shareCtx = {
+            page: 'procedures-guide',
+            title: 'تعليمات ما بعد العمليات الجراحية',
+            subtitle: 'اختر عملية طفلك واقرأ تعليماتها الخاصة'
+        };
+        return `
+            <div class="condition-header" style="background: linear-gradient(135deg, #7c3aed, #5b21b6);">
+                <div class="breadcrumb">
+                    <a href="#" data-nav="home">الرئيسية</a>
+                    <span>›</span>
+                    <span>تعليمات ما بعد العمليات</span>
+                </div>
+                <h1>تعليمات ما بعد العمليات الجراحية</h1>
+                <p class="subtitle">اختر اسم عملية طفلك: شرح العملية، الإقامة، الأدوية، الجبيرة، المتابعة، التأهيل والأجهزة</p>
+                ${renderShareRow('procedures-guide', 'تعليمات ما بعد العمليات الجراحية', 'تعليمات مفصّلة لكل عملية على حدة')}
+            </div>
+            <div class="condition-content">
+                ${(guide.sections || []).map((s, i) => renderSection(s, i, shareCtx)).join('')}
             </div>
         `;
     }
