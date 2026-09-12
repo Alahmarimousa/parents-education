@@ -129,3 +129,15 @@ the drafted text stands until confirmed.**
 - Section C (procedures to add, tone, things parents ask) — left blank.
 
 Totals: 26 content corrections, 14 deleted rows.
+
+## Round 2 — DDH open reduction (applied)
+
+| Item | Change |
+|---|---|
+| **Discharge medication** | Tramadol / opioid row removed entirely. Discharge analgesia is paracetamol and ibuprofen. |
+| **K-wires** | All mention removed. The guide no longer describes wires, wire removal, or a six-week visit to remove them. |
+| **Cast** | Stays on for the full two months — not changed or removed at six weeks. The six-week visit is now an X-ray check with the cast left in place. |
+
+Follow-on edits made for consistency: the quick-reference table row, the wound
+inspection line (which referred to the cast being changed), the temporary bone
+fragility line (6-12 weeks → two months), and the retained-metal FAQ.
