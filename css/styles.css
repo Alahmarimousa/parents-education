@@ -1218,12 +1218,31 @@ img { max-width: 100%; height: auto; }
     text-align: center;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-light);
+    /* Section titles vary a lot in length. A column layout with a reserved
+       heading height keeps every code aligned across the printed grid. */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .qr-card h3 {
     font-size: 16px;
     color: var(--text);
     margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 3.4em;
+    line-height: 1.4;
+}
+
+.qr-card .qr-en {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    direction: ltr;
+    margin-top: 3px;
 }
 
 .qr-card canvas {
@@ -1233,7 +1252,8 @@ img { max-width: 100%; height: auto; }
 }
 
 .qr-card .qr-actions {
-    margin-top: 16px;
+    margin-top: auto;
+    padding-top: 16px;
     display: flex;
     gap: 10px;
     justify-content: center;
