@@ -1,0 +1,356 @@
+[
+ {
+  "tile": "Tile.iwa",
+  "orig_table_index": 0,
+  "anchor": "Unit / hospital name",
+  "changes": [
+   [
+    "REMOVED ROW",
+    "Drug doses",
+    "Names + duration only; doses deferred to the discharge prescription (your choice). Say if you now want mg/kg printed.",
+    ""
+   ],
+   [
+    "REMOVED ROW",
+    "Vitamin D / calcium",
+    "Recommended after osteotomy, fusion and in neuromuscular children. Say if this is routine for everyone.",
+    ""
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1732895-2.iwa",
+  "orig_table_index": 1,
+  "anchor": "Arthrogram",
+  "changes": [
+   [
+    "CHANGED",
+    "Total spica time",
+    "~3 months (said it may extend to 4).",
+    "~3 months."
+   ],
+   [
+    "CHANGED",
+    "Confirmation imaging",
+    "Limited CT or MRI after reduction to confirm concentricity.",
+    "Standard XRAY 1 week Post Procedure"
+   ],
+   [
+    "CHANGED",
+    "Hospital stay",
+    "1 night, occasionally 2; same-day discharge in some centres.",
+    "Day Surgery"
+   ],
+   [
+    "CHANGED",
+    "Abduction brace",
+    "Full-time 4-6 weeks, then nights for 2-3 months. Denis Browne / removable hip brace.",
+    "After Removal of Spica cast , We might Prescribe abduction brace if needed ."
+   ],
+   [
+    "CHANGED",
+    "Follow-up",
+    "6 wks, cast off ~3 mo, then 3, 6, 12 months, yearly to maturity; focus at 4-5 yrs and puberty.",
+    "1 weeks XR at Local Hospital , then 6 wks XR at our hospital , to check the cast ,then at 3 Months Xray and cast removal, then 3, 6, 12 months, yearly to around age 4-5 of age or longer based on the Case"
+   ],
+   [
+    "CHANGED",
+    "Further surgery quoted",
+    "15-25% need a later pelvic osteotomy, usually age 3-7.",
+    "15-25% need a later pelvic osteotomy, usually age 3-5."
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1732948-2.iwa",
+  "orig_table_index": 2,
+  "anchor": "Approach",
+  "changes": [
+   [
+    "CHANGED",
+    "Approach",
+    "Anterior bikini incision.",
+    "Anterior small 4 cm incision."
+   ],
+   [
+    "CHANGED",
+    "Pelvic osteotomy",
+    "Salter / Dega / Pemberton — chosen by socket shape and age.",
+    "To Keep femoral head contained"
+   ],
+   [
+    "CHANGED",
+    "Femoral shortening / derotation",
+    "Added in older children or high dislocation. No age threshold stated.",
+    "Added in older children or high dislocation. Higher in Age 2 years and more ."
+   ],
+   [
+    "ADDED ROW",
+    "Fixation femur",
+    "",
+    "Plates and screws"
+   ],
+   [
+    "CHANGED",
+    "Femoral plate removal",
+    "9-18 months.",
+    "9-12 months."
+   ],
+   [
+    "CHANGED",
+    "Spica duration",
+    "6 weeks simple cases, up to 12 weeks with femoral shortening; change at 6 weeks under GA.",
+    "2 Months"
+   ],
+   [
+    "CHANGED",
+    "Hospital stay",
+    "2-4 days.",
+    "1-2 days."
+   ],
+   [
+    "CHANGED",
+    "Analgesia",
+    "Caudal/epidural or regular IV, then oral. Diazepam for spasm.",
+    "Caudal/epidural or regular IV, then oral Paracetamol and ibuprofen"
+   ],
+   [
+    "CHANGED",
+    "Anything else on this procedure",
+    "",
+    "Cast Care is very important see the Spica cast education"
+   ],
+   [
+    "REMOVED ROW",
+    "Fixation",
+    "K-wires or screws in pelvis; plate on femur when shortened.",
+    ""
+   ],
+   [
+    "REMOVED ROW",
+    "K-wire removal",
+    "~6 weeks.",
+    ""
+   ],
+   [
+    "REMOVED ROW",
+    "Drain",
+    "Possible, removed in 24-48 h.",
+    ""
+   ],
+   [
+    "REMOVED ROW",
+    "Weight-bearing",
+    "Not immediate after cast; sitting/crawling/standing 2-4 weeks before walking.",
+    ""
+   ],
+   [
+    "REMOVED ROW",
+    "Post-cast brace",
+    "Night abduction brace \"for some surgeons\" if socket still shallow.",
+    ""
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733005-2.iwa",
+  "orig_table_index": 3,
+  "anchor": "Cast",
+  "changes": [
+   [
+    "CHANGED",
+    "Hospital stay",
+    "2-3 days.",
+    "1-2 days."
+   ],
+   [
+    "REMOVED ROW",
+    "Osteotomy type",
+    "Salter / Dega / Pemberton by age and socket shape.",
+    ""
+   ],
+   [
+    "REMOVED ROW",
+    "Weight-bearing",
+    "NWB 6 weeks, then partial to full over 2-4 weeks.",
+    ""
+   ],
+   [
+    "REMOVED ROW",
+    "Wire removal",
+    "6-8 weeks.",
+    ""
+   ],
+   [
+    "REMOVED ROW",
+    "Typical age range",
+    "Given as 18 months to 10 years, with different techniques for adolescents.",
+    ""
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733052-2.iwa",
+  "orig_table_index": 4,
+  "anchor": "Number of screws",
+  "changes": []
+ },
+ {
+  "tile": "Tile-1733107-2.iwa",
+  "orig_table_index": 5,
+  "anchor": "Immobilisation",
+  "changes": [
+   [
+    "CHANGED",
+    "Cast duration when used",
+    "3-6 weeks, single or double leg spica.",
+    "4-6 weeks, single or double leg spica."
+   ],
+   [
+    "CHANGED",
+    "Hospital stay",
+    "2-4 days.",
+    "2-3 days."
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733158-2.iwa",
+  "orig_table_index": 6,
+  "anchor": "Components",
+  "changes": [
+   [
+    "CHANGED",
+    "Plate removal",
+    "Discussed at 6-12 months.",
+    "Discussed at Follow up"
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733217-2.iwa",
+  "orig_table_index": 7,
+  "anchor": "Implant",
+  "changes": [
+   [
+    "CHANGED",
+    "Implant",
+    "Screw (or screws) across part of the proximal femoral physis.",
+    "Screw across part of the proximal femoral physis."
+   ],
+   [
+    "CHANGED",
+    "Immobilisation",
+    "None. Wedge/immobiliser 2-4 weeks only if releases were added.",
+    "Abduction Cast A frame, Wedge/immobiliser 2-4 weeks only if releases were added."
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733270-2.iwa",
+  "orig_table_index": 8,
+  "anchor": "Technique",
+  "changes": [
+   [
+    "CHANGED",
+    "Post-op traction",
+    "Skin traction 3-6 weeks — written as \"your protocol\" (traction OR cast OR external fixator).",
+    "Skin traction 3-6 weeks — written as \"your protocol\" ."
+   ],
+   [
+    "REMOVED ROW",
+    "Heterotopic ossification prophylaxis",
+    "Mentioned as prescribed by some surgeons. No agent named.",
+    ""
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733321-2.iwa",
+  "orig_table_index": 9,
+  "anchor": "Typical combination",
+  "changes": [
+   [
+    "CHANGED",
+    "Hospital stay",
+    "1-3 days, up to 4-5 for multilevel.",
+    "1-3 days."
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733374-2.iwa",
+  "orig_table_index": 10,
+  "anchor": "Implant",
+  "changes": []
+ },
+ {
+  "tile": "Tile-1733423-2.iwa",
+  "orig_table_index": 11,
+  "anchor": "Which joints",
+  "changes": [
+   [
+    "CHANGED",
+    "Cast sequence",
+    "2 wks first cast, to 6 wks NWB, then walking cast 4-6 wks. Total 10-12 weeks.",
+    "2 wks first cast, to 6 wks NWB, then walking cast another 2 wks."
+   ],
+   [
+    "REMOVED ROW",
+    "Ibuprofen",
+    "Flagged that some surgeons limit NSAIDs because of union — say your preference.",
+    ""
+   ],
+   [
+    "REMOVED ROW",
+    "Vitamin D / nutrition",
+    "Emphasised as a union factor.",
+    ""
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733474-2.iwa",
+  "orig_table_index": 12,
+  "anchor": "Setting",
+  "changes": [
+   [
+    "CHANGED",
+    "Weight-bearing",
+    "Immediate and full; crutches optional for comfort.",
+    "Immediate and full; crutches"
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733527-2.iwa",
+  "orig_table_index": 13,
+  "anchor": "Technique",
+  "changes": []
+ },
+ {
+  "tile": "Tile-1733578-2.iwa",
+  "orig_table_index": 14,
+  "anchor": "Setting / anaesthetic",
+  "changes": [
+   [
+    "CHANGED",
+    "Setting / anaesthetic",
+    "Clinic under local anaesthetic mostly, light GA as alternative. Say which you use.",
+    "light GA /Sedation and local Anesthesia."
+   ]
+  ]
+ },
+ {
+  "tile": "Tile-1733635-2.iwa",
+  "orig_table_index": 15,
+  "anchor": "Proportion needing surgery",
+  "changes": []
+ },
+ {
+  "tile": "Tile-1733693-2.iwa",
+  "orig_table_index": 16,
+  "anchor": "Question",
+  "changes": []
+ }
+]
